@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
@@ -10,7 +10,7 @@ import HandleSearch from "@/utils/HandleSearch";
 import { logoutAction } from "@/action/userAction";
 import { useAuth } from "@/app/context/AuthContext";
 
-export default function Navbar() {
+function NavbarContent() {
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
 
@@ -268,5 +268,14 @@ export default function Navbar() {
                 </div>
             </div>
         </>
+    );
+}
+
+
+export default function Navbar() {
+    return (
+        <Suspense fallback={null}>
+            <NavbarContent />
+        </Suspense>
     );
 }
