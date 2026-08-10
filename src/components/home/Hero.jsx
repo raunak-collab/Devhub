@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense, useState } from "react";
+import React, { useState } from "react";
 import SearchInput from "../ui/SearchInput";
 import PopularTools from "../cards/PopularToolChip";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 import HandleSearch from "@/utils/HandleSearch";
 import { useSearchParams, useRouter } from "next/navigation";
 
-function HeroContent() {
+export default function Hero() {
   const [search, setSearch] = useState('')
 
   const router = useRouter()
@@ -62,14 +62,5 @@ function HeroContent() {
         </div>
       </section>
     </div>
-  );
-}
-
-
-export default function Hero() {
-  return (
-    <Suspense fallback={null}>
-      <HeroContent />
-    </Suspense>
   );
 }
