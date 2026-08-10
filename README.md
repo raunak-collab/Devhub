@@ -1,37 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚀 DevHub
 
-## Getting Started
+> All Developer Tools in One Place
 
-First, run the development server:
+DevHub is an all-in-one developer toolkit designed to make everyday development tasks faster, easier, and more efficient.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Instead of switching between multiple websites for different utilities, DevHub brings useful developer tools together in one place.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 🔐 User Authentication
+- 🛠️ Multiple Developer Tools
+- 🔎 Powerful Tool Search
+- 📂 Tool Categories
+- 📊 Personal Dashboard
+- 🌙 Modern Dark UI
+- 📱 Responsive Design
+- ⚡ Fast and optimized performance
+- ☁️ Cloud-based database with MongoDB Atlas
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🧰 Available Tools
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+DevHub provides a growing collection of useful developer utilities.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Formatting
+- JSON Formatter
 
-## Deploy on Vercel
+### Security
+- Password Generator
+- JWT Decoder
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Development
+- UUID Generator
+- Regex Tester
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Devhub
+### Network & API
+- API Utilities
+
+### Image & Conversion
+- Image Tools
+- Conversion utilities
+
+> More developer tools are being added regularly.
+
+---
+
+## 🖥️ Tech Stack
+
+### Frontend
+
+- Next.js
+- React
+- JavaScript
+- Tailwind CSS
+- Lucide React
+
+### Backend
+
+- Next.js API Routes
+- Server Actions
+
+### Database
+
+- MongoDB
+- MongoDB Atlas
+- Mongoose
+
+### Authentication
+
+- Custom Authentication
+- HTTP Cookies
+- Protected Routes
+
+### Deployment
+
+- Vercel
+
+---
+
+## 📁 Project Structure
+
+```text
+DevHub/
+│
+├── public/
+│   ├── images/
+│   └── ...
+│
+├── src/
+│   │
+│   ├── action/
+│   │   └── userAction.js
+│   │
+│   ├── app/
+│   │   ├── api/
+│   │   ├── context/
+│   │   ├── dashboard/
+│   │   ├── login/
+│   │   ├── signup/
+│   │   ├── tools/
+│   │   ├── layout.js
+│   │   └── page.js
+│   │
+│   ├── components/
+│   │   ├── cards/
+│   │   ├── ui/
+│   │   └── Navbar.jsx
+│   │
+│   ├── lib/
+│   │   └── db.js
+│   │
+│   ├── models/
+│   │   └── User.js
+│   │
+│   └── utils/
+│       └── HandleSearch.js
+│
+├── .env.local
+├── .gitignore
+├── package.json
+├── next.config.js
+├── postcss.config.mjs
+├── tailwind.config.js
+└── README.md
