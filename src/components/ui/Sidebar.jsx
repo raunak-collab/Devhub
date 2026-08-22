@@ -104,10 +104,9 @@ export default function Sidebar() {
                                 flex items-center gap-4 rounded-md
                                 px-5 py-2.5
                                 transition-all duration-300
-                                ${
-                                    pathname === link.href
-                                        ? "bg-[#101D3A] text-white"
-                                        : "hover:bg-white/5 hover:text-slate-300"
+                                ${pathname.split('/').slice(0, 3).join('/') === link.href
+                                    ? "bg-[#101D3A] text-white"
+                                    : "hover:bg-white/5 hover:text-slate-300"
                                 }
                             `}
                         >

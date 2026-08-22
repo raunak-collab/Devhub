@@ -1,60 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LuFolder, LuPlus, LuSearch } from "react-icons/lu";
-import { FaCode, FaDatabase, FaShieldAlt, FaPalette } from "react-icons/fa";
 import { FiMoreVertical } from "react-icons/fi";
+import {
+  FaCode,
+  FaDatabase,
+  FaShieldAlt,
+  FaPalette,
+  FaTerminal,
+  FaGlobe,
+  FaMobileAlt,
+  FaServer,
+  FaCloud,
+  FaCog,
+  FaNetworkWired,
+} from "react-icons/fa";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const collections = [
-  {
-    name: "Web Development",
-    description: "Frontend and backend development tools.",
-    tools: 12,
-    icon: <FaCode size={21} />,
-    color: "bg-violet-600/20 text-violet-400",
-  },
-  {
-    name: "API Tools",
-    description: "Tools for testing and working with APIs.",
-    tools: 8,
-    icon: <LuFolder size={22} />,
-    color: "bg-blue-600/20 text-blue-400",
-  },
-  {
-    name: "Database",
-    description: "Database management and query tools.",
-    tools: 6,
-    icon: <FaDatabase size={20} />,
-    color: "bg-emerald-600/20 text-emerald-400",
-  },
-  {
-    name: "Security",
-    description: "Security, encryption and testing utilities.",
-    tools: 5,
-    icon: <FaShieldAlt size={20} />,
-    color: "bg-orange-600/20 text-orange-400",
-  },
-  {
-    name: "Design Resources",
-    description: "Useful tools for colours, images and design.",
-    tools: 7,
-    icon: <FaPalette size={20} />,
-    color: "bg-pink-600/20 text-pink-400",
-  },
-  {
-    name: "Code Utilities",
-    description: "Formatters, converters and developer utilities.",
-    tools: 10,
-    icon: <FaCode size={21} />,
-    color: "bg-cyan-600/20 text-cyan-400",
-  },
-];
 
 export default function CollectionsPage() {
   const [search, setSearch] = useState("");
+  const [collectionsData, setCollectionsData] = useState([])
+  const [loading, setloading] = useState(true)
+  const router = useRouter()
 
-  const filteredCollections = collections.filter((collection) =>
+  useEffect(() => {
+
+    async function fetchCollections() {
+      try {
+        const response = await fetch('/api/collections')
+
+        if (response.status === 401) {
+          return router.push('/login')
+        }
+
+        console.log(response)
+
+        const data = await response.json()
+        console.log(data)
+
+        if (!data.error) {
+          setCollectionsData(data)
+        }
+
+      }
+      finally {
+        setloading(false)
+      }
+    }
+    fetchCollections()
+  }, [])
+
+
+
+  const filteredCollections = collectionsData.filter((collection) =>
     collection.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -103,7 +105,8 @@ export default function CollectionsPage() {
           </div>
 
           {/* Create Button */}
-          <button
+          <Link
+            href="/dashboard/collections/createcollection"
             className="
                             flex h-11 items-center justify-center gap-2
                             rounded-lg
@@ -116,7 +119,7 @@ export default function CollectionsPage() {
           >
             <LuPlus size={19} />
             Create Collection
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -125,7 +128,7 @@ export default function CollectionsPage() {
 
         <StatCard
           title="Collections"
-          value={collections.length}
+          value={collectionsData.length}
         />
 
         <StatCard
@@ -146,34 +149,79 @@ export default function CollectionsPage() {
       </div>
 
       {/* Collections Grid */}
-      {filteredCollections.length > 0 ? (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-
-          {filteredCollections.map((collection) => (
-            <CollectionCard
-              key={collection.name}
-              collection={collection}
-            />
-          ))}
-
+      {loading ? (
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div
+            className="
+        rounded-xl
+        border border-slate-900
+        bg-[#060e18]
+        h-48 w-79 
+      "
+          />
+          <div
+            className="
+        rounded-xl
+        border border-slate-900
+        bg-[#060e18]
+        h-48 w-79 
+      "
+          />
+          <div
+            className="
+        rounded-xl
+        border border-slate-900
+        bg-[#060e18]
+        h-48 w-79 
+      "
+          />
+          <div
+            className="
+        rounded-xl
+        border border-slate-900
+        bg-[#060e18]
+        h-48 w-79 
+      "
+          />
+          <div
+            className="
+        rounded-xl
+        border border-slate-900
+        bg-[#060e18]
+        h-48 w-79 
+      "
+          />
         </div>
       ) : (
-        <div className="flex min-h-87.5 flex-col items-center justify-center text-center">
+        filteredCollections.length > 0 ? (
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
 
-          <div className="mb-4 rounded-full bg-purple-500/10 p-4 text-violet-400">
-            <LuFolder size={30} />
+            {filteredCollections.map((collection) => (
+              <CollectionCard
+                key={collection.name}
+                collection={collection}
+              />
+            ))}
+
           </div>
+        ) : (
+          <div className="flex min-h-87.5 flex-col items-center justify-center text-center">
 
-          <h2 className="text-lg font-medium text-slate-200">
-            No collections found
-          </h2>
+            <div className="mb-4 rounded-full bg-purple-500/10 p-4 text-violet-400">
+              <LuFolder size={30} />
+            </div>
 
-          <p className="mt-1 text-sm text-slate-500">
-            Try searching for another collection.
-          </p>
+            <h2 className="text-lg font-medium text-slate-200">
+              No collections found
+            </h2>
 
-        </div>
-      )}
+            <p className="mt-1 text-sm text-slate-500">
+              Try searching for another collection.
+            </p>
+
+          </div>
+        ))}
+
     </section>
   );
 }
@@ -205,42 +253,62 @@ function StatCard({ title, value }) {
 /* ---------------- Collection Card ---------------- */
 
 function CollectionCard({ collection }) {
+  const iconMap = {
+    FaCode,
+    FaDatabase,
+    FaShieldAlt,
+    FaPalette,
+    FaTerminal,
+    FaGlobe,
+    FaMobileAlt,
+    FaServer,
+    FaCloud,
+    FaCog,
+    FaNetworkWired,
+  };
+  const Icon = iconMap[collection?.icon?.name] || LuFolder;
+
+  function firstCapital(string) {
+    return string[0].toUpperCase() + string.slice(1)
+  }
+
+  const name = firstCapital(collection.name.split(' ')[0]) + " " + firstCapital(collection.name.split(' ')[1])
+  const desc = firstCapital(collection.desc)
+
   return (
     <div
       className="
-                group rounded-xl
-                border border-slate-800
-                bg-[#0B1421]
-                p-5
-                transition-all duration-300
-                hover:-translate-y-0.5
-                hover:border-slate-700
-                hover:bg-[#0D1727]
-            "
+        group rounded-xl
+        border border-slate-800
+        bg-[#0B1421]
+        p-5
+        transition-all duration-300
+        hover:-translate-y-0.5
+        hover:border-slate-700
+        hover:bg-[#0D1727]
+      "
     >
-
-      {/* Top */}
       <div className="flex items-start justify-between">
 
         <div className="flex items-center gap-3">
 
           <div
             className={`
-                            flex h-11 w-11 items-center justify-center
-                            rounded-lg
-                            ${collection.color}
-                        `}
+              flex h-11 w-11 items-center justify-center
+              rounded-lg
+              ${collection?.icon?.color || "bg-violet-500/10 text-violet-400"}
+            `}
           >
-            {collection.icon}
+            <Icon size={21} />
           </div>
 
           <div>
             <h2 className="font-medium text-slate-100">
-              {collection.name}
+              {name}
             </h2>
 
             <p className="mt-0.5 text-xs text-slate-500">
-              {collection.tools} tools
+              {collection.tools?.length || 0} tools
             </p>
           </div>
 
@@ -248,47 +316,45 @@ function CollectionCard({ collection }) {
 
         <button
           className="
-                        rounded-md p-1.5
-                        text-slate-500
-                        transition
-                        hover:bg-white/5
-                        hover:text-slate-300
-                    "
+            rounded-md p-1.5
+            text-slate-500
+            transition
+            hover:bg-white/5
+            hover:text-slate-300
+          "
         >
           <FiMoreVertical size={19} />
         </button>
 
       </div>
 
-      {/* Description */}
       <p className="mt-5 min-h-10.5 text-sm leading-6 text-slate-400">
-        {collection.description}
+        {desc}
       </p>
 
-      {/* Divider */}
       <div className="my-4 border-t border-slate-800" />
 
-      {/* Bottom */}
       <div className="flex items-center justify-between">
 
         <span className="text-xs text-slate-500">
-          {collection.tools} tools
+          {collection.tools?.length || 0} tools
         </span>
 
-        <button
+        <Link
+          href={`/dashboard/collections/${name.toLowerCase().replace(" ", "-")}`}
           className="
-                        text-xs font-medium
-                        text-violet-400
-                        transition
-                        flex gap-1
-                        hover:text-purple-300
-                    "
+            flex gap-1
+            text-xs font-medium
+            text-violet-400
+            transition
+            hover:text-purple-300
+          "
         >
-          View Collection <ArrowRight size={15}/>
-        </button>
+          View Collection
+          <ArrowRight size={15} />
+        </Link>
 
       </div>
-
     </div>
   );
 }

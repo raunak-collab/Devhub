@@ -3,36 +3,38 @@
 import FavouritesCard from "@/components/cards/FavouritesCard";
 import { FaRegStar } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { AllTools } from "@/app/AllTools";
 
 export default function Favourites() {
-    const favourites = [
-        {
-            src: "/images/1.png",
-            heading: "JWT Decoder",
-            title: "Decode and verify JWT tokens",
-        },
-        {
-            src: "/images/2.png",
-            heading: "JSON Formatter",
-            title: "Format and validate JSON",
-        },
-        {
-            src: "/images/3.png",
-            heading: "Regex Tester",
-            title: "Verify regular expressions",
-        },
-        {
-            src: "/images/4.png",
-            heading: "Password Generator",
-            title: "Generate strong passwords",
-        },
-    ];
 
+    const [favouritesTools, setFavouritestools] = useState([])
     const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(true)
 
-    const filteredFavourites = favourites.filter((item) =>
-        item.heading.toLowerCase().includes(search.toLowerCase())
+    useEffect(() => {
+        async function fetchFavouritesTools() {
+            try {
+                const response = await fetch('/api/favouritestools')
+
+                const favouritesToolsData = await response.json();
+
+                if (!favouritesToolsData.error) {
+                    const favouritesToolsArr = favouritesToolsData.map(({ title }) => title)
+                    setFavouritestools(favouritesToolsArr);
+                }
+
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchFavouritesTools()
+    }, [])
+
+    const favourites = AllTools.filter(({ title }) => favouritesTools.includes(title))
+
+    const filteredFavourites = favourites.filter(({ title }) =>
+        title.toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -48,7 +50,7 @@ export default function Favourites() {
                         </h1>
 
                         <span className="rounded-full border border-slate-700 bg-[#101827] px-2.5 py-1 text-xs font-medium text-slate-400">
-                            {favourites.length}
+                            {favouritesTools.length}
                         </span>
                     </div>
 
@@ -88,35 +90,85 @@ export default function Favourites() {
             </div>
 
             {/* Favourites */}
-            {filteredFavourites.length > 0 ? (
+            {loading ? (
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    {filteredFavourites.map(({ src, heading, title }) => (
-                        <FavouritesCard
-                            key={heading}
-                            src={src}
-                            heading={heading}
-                            title={title}
-                        />
-                    ))}
+                    <div className="
+                 min-h-30 w-full
+                rounded-lg
+                border border-[#0d1621]
+                bg-[#040913]
+                p-5
+                "/>
+                    <div className="
+                 min-h-30 w-full
+                rounded-lg
+                border border-[#0d1621]
+                bg-[#040913]
+                p-5
+                "/>
+                    <div className="
+                 min-h-30 w-full
+                rounded-lg
+                border border-[#0d1621]
+                bg-[#040913]
+                p-5
+                "/>
+                    <div className="
+                 min-h-30 w-full
+                rounded-lg
+                border border-[#0d1621]
+                bg-[#040913]
+                p-5
+                "/>
+                    <div className="
+                 min-h-30 w-full
+                rounded-lg
+                border border-[#0d1621]
+                bg-[#040913]
+                p-5
+                "/>
                 </div>
             ) : (
-                /* Empty State */
-                <div className="flex min-h-[350px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-800 bg-[#0B1421]/40 px-5 text-center">
-
-                    <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#101D3A] text-slate-400">
-                        <FaRegStar size={24} />
+                filteredFavourites.length > 0 ? (
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                        {filteredFavourites.map(({ src, desc, title, icon: Icon, iconBg, iconColor }) => (
+                            <FavouritesCard
+                                key={title}
+                                src={src}
+                                title={title}
+                                desc={desc}
+                                icon={
+                                    <div
+                                        className={`flex h-10 w-10 items-center justify-center rounded-lg ${iconBg}`}
+                                    >
+                                        <Icon
+                                            size={21}
+                                            strokeWidth={1.8}
+                                            className={iconColor}
+                                        />
+                                    </div>
+                                }
+                            />
+                        ))}
                     </div>
+                ) : (
+                    /* Empty State */
+                    <div className="flex min-h-87.5 flex-col items-center justify-center rounded-xl border border-dashed border-slate-800 bg-[#0B1421]/40 px-5 text-center">
 
-                    <h2 className="text-lg font-medium text-slate-200">
-                        No favourites found
-                    </h2>
+                        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#101D3A] text-slate-400">
+                            <FaRegStar size={24} />
+                        </div>
 
-                    <p className="mt-1 max-w-sm text-sm text-slate-500">
-                        Try searching for another tool or add some tools to
-                        your favourites.
-                    </p>
-                </div>
-            )}
+                        <h2 className="text-lg font-medium text-slate-200">
+                            No favourites found
+                        </h2>
+
+                        <p className="mt-1 max-w-sm text-sm text-slate-500">
+                            Try searching for another tool or add some tools to
+                            your favourites.
+                        </p>
+                    </div>
+                ))}
         </section>
     );
 }

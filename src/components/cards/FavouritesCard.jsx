@@ -1,29 +1,51 @@
-import Image from 'next/image'
-import Link from 'next/link';
+import Link from "next/link";
 import { FaStar } from "react-icons/fa6";
 
-export default function FavouritesCard({ src, heading, title }) {
-
+export default function FavouritesCard({ title, desc, icon }) {
     return (
-        <Link href='/' className='hover:shadow-[0_0_30px_rgba(101,58,219,0.3)] rounded-lg border border-[#1F2937] bg-[#0A101C] p-5 transition-all duration-300 hover:border-violet-600 flex justify-between h-28 items-center'>
+        <Link
+            href="/"
+            className="
+                group
+                flex min-h-[120px] w-full
+                items-start justify-between
+                gap-4
+                rounded-lg
+                border border-[#1F2937]
+                bg-[#0A101C]
+                p-5
+                transition-all duration-300
+                hover:border-violet-600
+                hover:shadow-[0_0_30px_rgba(101,58,219,0.3)]
+            "
+        >
+            {/* Left */}
+            <div className="flex min-w-0 flex-1 items-start gap-5">
 
-            {/* Favourites */}
-            <div className='flex gap-6'>
-                <Image
-                    src={src}
-                    width={43}
-                    height={40}
-                    alt={heading}
-                    className='object-contain'
-                />
-                <div className='flex flex-col gap-1'>
-                    <h2 className='text-slate-300 text-lg font-semibold'>{heading}</h2>
-                    <p className='text-slate-400 text-sm'>{title}</p>
+                {/* Icon */}
+                <div className="shrink-0">
+                    {icon}
+                </div>
+
+                {/* Content */}
+                <div className="min-w-0">
+                    <h2 className="truncate text-base font-semibold text-slate-300">
+                        {title}
+                    </h2>
+
+                    <p className="mt-1 line-clamp-2 text-[13px] leading-5 text-slate-400">
+                        {desc}
+                    </p>
                 </div>
             </div>
 
             {/* Star */}
-            <FaStar size={20} className='text-yellow-400' />
+            <div className="shrink-0 mt-1">
+                <FaStar
+                    size={20}
+                    className="text-yellow-400 transition-transform duration-300 group-hover:scale-110"
+                />
+            </div>
         </Link>
-    )
+    );
 }

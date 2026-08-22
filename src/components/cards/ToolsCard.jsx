@@ -1,11 +1,15 @@
-import { IoBookmarkOutline, IoStar } from "react-icons/io5"
-import { CiStar } from "react-icons/ci";
+'use client'
+
+import { IoBookmarkOutline} from "react-icons/io5"
+import { FaRegStar } from "react-icons/fa";
 import { ArrowRight } from "lucide-react";
 import { PiBookmarkSimpleFill } from "react-icons/pi";
-import { savedToolsAction, unsavedToolsAction } from "@/action/userAction";
-import { useState } from "react";
+import { toggleFavouriteToolsAction, toggleSavedToolsAction } from "@/action/userAction";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { FaStar } from "react-icons/fa";
+
 
 
 export default function ToolsCard({
@@ -14,31 +18,55 @@ export default function ToolsCard({
     icon,
     type,
     typeBg,
+    isSaved,
+    isFavourites,
     typeColor
 }) {
 
     const [save, setSave] = useState(false)
+    const [favourites, setFavourites] = useState(false)
 
     const router = useRouter()
+    
+    useEffect(() => {
+        setSave(isSaved)
+    }, [isSaved])
 
-    const handleSaveTools = async (title) => {
-        const response = await savedToolsAction(title);
+    useEffect(() => {
+        setFavourites(isFavourites)
+    }, [isFavourites])
+
+
+    const handleToggleSaveTools = async (title) => {
+
+        setSave((prev) => !prev)
+
+        const response = await toggleSavedToolsAction(title);
 
         if (response.status === 401) {
+            setSave((prev) => !prev)
             return router.push('/login')
-        } else {
-            setSave(true)
         }
+        if (!response.success) {
+            setSave((prev) => !prev)
+        }
+
     }
 
-    const handleUnSaveTools = async (title) => {
-        const response = await unsavedToolsAction(title);
+    const handleToggleFavouriteTools = async (title) => {
+
+        setFavourites((prev) => !prev)
+
+        const response = await toggleFavouriteToolsAction(title);
 
         if (response.status === 401) {
+            setSave((prev) => !prev)
             return router.push('/login')
-        } else {
-            setSave(false)
         }
+        if (!response.success) {
+            setSave((prev) => !prev)
+        }
+
     }
 
 
@@ -59,22 +87,18 @@ export default function ToolsCard({
             `}
         >
             {/* Icon */}
-            <div className="flex  justify-between mb-3">
+            <div className="flex justify-between mb-3">
                 {icon}
                 <div className="flex h-6 gap-3.5 items-center text-slate-300">
-                    <button type="button">
-                        <CiStar size={24} />
+                    <button type="button" onClick={() => handleToggleFavouriteTools(title)}>
+                        {favourites ? <FaStar size={21} /> : <FaRegStar size={21} />}
                     </button>
-                    {save ? (
-                        <button onClick={() => handleUnSaveTools(title)} className="cursor-pointer" type="button">
-                            <PiBookmarkSimpleFill size={21} />
-                        </button>) :
-                        (
-                            <button onClick={() => handleSaveTools(title)} className="cursor-pointer" type="button">
-                                <IoBookmarkOutline size={21} />
-                            </button>
-                        )
-                    }
+
+                    <button onClick={() => handleToggleSaveTools(title)}
+                        className="cursor-pointer" type="button">
+                        {save ? <PiBookmarkSimpleFill size={21} /> : <IoBookmarkOutline size={21} />}
+                    </button>
+
                 </div>
             </div>
 

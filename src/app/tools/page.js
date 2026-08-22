@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import HandleSearch from '@/utils/HandleSearch';
-import {AllTools} from '../AllTools.js'
+import { AllTools } from '../AllTools.js'
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 
@@ -23,6 +23,8 @@ export default function Tools() {
 
     const urlsearch = (searchParams.get('search') || '').toLowerCase()
     const category = (searchParams.get('category') || 'All').toLowerCase()
+    const [savedtools, setSavedtools] = useState([])
+    const [favouritestools, setFavouritestools] = useState([])
 
     useEffect(() => {
         setcurrentPage(1)
@@ -31,6 +33,41 @@ export default function Tools() {
     useEffect(() => {
         setsearch(urlsearch);
     }, [urlsearch]);
+
+
+    useEffect(() => {
+        async function fetchFavouritesTools() {
+            const response = await fetch('/api/favouritestools')
+
+            const favouritesToolsData = await response.json();
+
+            if (!favouritesToolsData.error) {
+                const favouritesToolsArr = favouritesToolsData.map(({ title }) => title)
+
+                setFavouritestools(favouritesToolsArr);
+            }
+
+        }
+        fetchFavouritesTools()
+    }, [])
+
+
+    useEffect(() => {
+        async function fetchSavedTools() {
+            const response = await fetch('/api/savedtools')
+
+            const savedToolsdata = await response.json();
+
+            if (!savedToolsdata.error) {
+                const savedToolsArr = savedToolsdata.map(({ title }) => title)
+
+                setSavedtools(savedToolsArr);
+            }
+
+        }
+        fetchSavedTools()
+    }, [])
+
 
 
     const filteredTools = AllTools.filter((tool) => {
@@ -112,7 +149,6 @@ export default function Tools() {
 
         return pages
     }
-
 
     return (
         <main className='min-h-[calc(100vh-4.1rem)] border'>
@@ -196,6 +232,8 @@ export default function Tools() {
                                             <ToolsCard
                                                 title={title}
                                                 desc={desc}
+                                                isSaved={savedtools.includes(title)}
+                                                isFavourites={favouritestools.includes(title)}
                                                 type={type}
                                                 typeBg={typeBg}
                                                 typeColor={typeColor}

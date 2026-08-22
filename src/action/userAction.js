@@ -9,6 +9,8 @@ import { Session } from "@/models/sessionModel"
 import { cookies } from "next/headers"
 import getLoggedUser, { signedCookie } from "@/data/Auth"
 import { SavedTools } from "@/models/savedToolsModel"
+import { FavouritesTools } from "@/models/favouritesToolsModel"
+import Collection from "@/models/collectionModel"
 
 
 export default async function registerAction(_, formData) {
@@ -132,40 +134,100 @@ export async function logoutAction() {
 }
 
 
-export async function savedToolsAction(title) {
+export async function toggleSavedToolsAction(title) {
     const user = await getLoggedUser()
 
     if (user instanceof Response) {
-        return user
+        console.log(user)
+        return { status: user.status }
     }
 
+    await connectDb()
+
     try {
+
+        const findTools = await SavedTools.findOne({ userId: user.id, title })
+
+        if (findTools) {
+            await SavedTools.deleteOne(findTools)
+            return { success: true, message: 'UnSaved Tools Successfully ✅' }
+        }
+
         await SavedTools.create({
             title,
             userId: user.id
         })
+
+        return { success: true, message: 'Saved Tools Successfully ✅' }
     }
     catch (err) {
         console.log(err)
+        return { success: false }
     }
-
-    return { success: true, message: 'Saved Tools Successfully ✅' }
 }
 
 
-export async function unsavedToolsAction(title) {
+export async function toggleFavouriteToolsAction(title) {
     const user = await getLoggedUser()
 
     if (user instanceof Response) {
-        return user
+        console.log(user)
+        return { status: user.status }
     }
 
+    await connectDb()
+
     try {
-        await SavedTools.deleteOne({ userId: user.id })
+
+        const findTools = await FavouritesTools.findOne({ userId: user.id, title })
+
+        if (findTools) {
+            await FavouritesTools.deleteOne(findTools)
+            return { success: true, message: 'UnSaved Tools Successfully ✅' }
+        }
+
+        await FavouritesTools.create({
+            title,
+            userId: user.id
+        })
+
+        return { success: true, message: 'Saved Tools Successfully ✅' }
     }
     catch (err) {
         console.log(err)
+        return { success: false }
+    }
+}
+
+
+export async function createCollectionAction(name, desc, selectedicon, selectedTools) {
+
+    const user = await getLoggedUser()
+
+    if (user instanceof Response) {
+        console.log(user)
+        return { status: user.status }
     }
 
-    return { success: true, message: 'Unsaved Tools Successfully ✅' }
+    await connectDb();
+
+    try {
+        await Collection.create({
+            userId: user.id,
+            name,
+            desc,
+            icon: {
+                name: selectedicon.name,
+                color: selectedicon.color,
+            },
+            tools: selectedTools
+        })
+
+        return { success: true, message: 'Collection Created Successfully ✅' }
+
+    }
+    catch (err) {
+        console.log(err)
+        return { success: false, error: 'Something went Wrong!' }
+    }
 }

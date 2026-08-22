@@ -1,5 +1,5 @@
 import getLoggedUser from "@/data/Auth";
-import { SavedTools } from "@/models/savedToolsModel";
+import { FavouritesTools } from "@/models/favouritesToolsModel";
 
 
 export async function GET() {
@@ -9,11 +9,13 @@ export async function GET() {
         return user
     }
 
-    const savedToolsData = await SavedTools.find({ userId: user.id })
+    const favouritesToolsData = await FavouritesTools.find({ userId: user.id })
+   
 
-    if (!savedToolsData.length) {
+    if (!favouritesToolsData.length) {
         return Response.json({ error: 'No Tools found' }, { status: 404 })
     }
 
-    return Response.json(savedToolsData, { status: 201 })
+    return Response.json(favouritesToolsData, { status: 201 })
+
 }

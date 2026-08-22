@@ -1,13 +1,48 @@
-import Image from "next/image";
+
+import { toggleSavedToolsAction } from "@/action/userAction";
 import Link from "next/link";
-import { FiBookmark, FiExternalLink } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { FiExternalLink } from "react-icons/fi";
+import { IoBookmarkOutline } from "react-icons/io5";
+import { PiBookmarkSimpleFill } from "react-icons/pi";
 
 export default function SavedToolsCard({
-    src,
-    heading,
     title,
-    category,
+    desc,
+    icon,
+    type,
+    typeBg,
+    isSaved,
+    onUnsave,
+    typeColor
 }) {
+
+    const [save, setSave] = useState(true)
+
+    useEffect(() => {
+        setSave(isSaved)
+    }, [isSaved])
+
+
+    const handleToggleSaveTools = async (title) => {
+
+        setSave((prev) => !prev)
+
+        const response = await toggleSavedToolsAction(title);
+
+        if (response.status === 401) {
+            setSave((prev) => !prev)
+            return router.push('/login')
+        }
+        if (!response.success) {
+            setSave((prev) => !prev)
+        }
+
+        onUnsave?.(title)
+
+    }
+
+
     return (
         <div
             className="
@@ -24,31 +59,40 @@ export default function SavedToolsCard({
             {/* Top */}
             <div className="flex items-start justify-between">
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
 
-                    <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-800 bg-[#101827]">
-                        <Image
-                            src={src}
-                            width={30}
-                            height={30}
-                            alt={heading}
-                            className="object-contain"
-                        />
+                    {/* Icon */}
+                    <div className="flex  justify-between">
+                        {icon}
                     </div>
 
-                    <div>
-                        <h2 className="font-medium text-slate-100">
-                            {heading}
+                    <div className="flex flex-col gap-1">
+                        <h2 className="font-medium text-[15px] text-slate-100">
+                            {title}
                         </h2>
 
-                        <span className="text-xs text-slate-500">
-                            {category}
-                        </span>
+                        {/* Type */}
+                        <p
+                            className={`
+                                 w-fit
+                  
+                    rounded-md
+                    px-2
+                    py-1
+                    text-[11px]
+                    font-medium
+                    ${typeBg}
+                    ${typeColor}
+                `}
+                        >
+                            {type}
+                        </p>
                     </div>
                 </div>
 
                 <button
                     aria-label="Remove bookmark"
+                    onClick={() => handleToggleSaveTools(title)}
                     className="
                         rounded-md p-2
                         text-slate-400
@@ -57,13 +101,13 @@ export default function SavedToolsCard({
                         hover:text-white
                     "
                 >
-                    <FiBookmark size={18} />
+                    {save ? <PiBookmarkSimpleFill size={21} /> : <IoBookmarkOutline size={21} />}
                 </button>
             </div>
 
             {/* Description */}
-            <p className="mt-5 min-h-[42px] text-sm leading-6 text-slate-400">
-                {title}
+            <p className="mt-5 min-h-10.5 text-sm leading-6 text-slate-400">
+                {desc}
             </p>
 
             <div className="my-4 border-t border-slate-800" />
@@ -76,7 +120,7 @@ export default function SavedToolsCard({
                 </span>
 
                 <Link
-                    href="#"
+                    href={title.toLowerCase().replace(" ", "-")}
                     className="
                         flex items-center gap-1.5
                         text-xs font-medium

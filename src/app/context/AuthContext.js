@@ -15,13 +15,29 @@ export function AuthProvider({ children }) {
                     cache: "no-store",
                 });
 
+                const contentType = response.headers.get("content-type");
+
+                if (!contentType?.includes("application/json")) {
+                    console.error(
+                        "Expected JSON but received:",
+                        contentType
+                    );
+
+                    const text = await response.text();
+                    console.error(text);
+
+                    setUser(null);
+                    return;
+                }
+
                 const data = await response.json();
 
-                if (response.ok && !data.error) {
+                if (response.ok) {
                     setUser(data);
                 } else {
                     setUser(null);
                 }
+
             } catch (error) {
                 console.error("Failed to fetch user:", error);
                 setUser(null);
@@ -59,7 +75,9 @@ export function useAuth() {
     const context = useContext(AuthContext);
 
     if (!context) {
-        throw new Error("useAuth must be used inside AuthProvider");
+        throw new Error(
+            "useAuth must be used inside AuthProvider"
+        );
     }
 
     return context;
