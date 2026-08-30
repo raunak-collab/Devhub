@@ -16,6 +16,6 @@ export async function GET() {
         return Response.json({ error: 'No Tools found' }, { status: 404 })
     }
 
-    return Response.json(favouritesToolsData, { status: 201 })
+    return Response.json(favouritesToolsData, { status: 200 })
 
 }

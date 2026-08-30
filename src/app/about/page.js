@@ -49,7 +49,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#02050D] text-white">
+    <main className="min-h-screen text-white">
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-slate-800/70">
         {/* Background glow */}

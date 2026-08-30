@@ -60,11 +60,11 @@ export default function ToolsCard({
         const response = await toggleFavouriteToolsAction(title);
 
         if (response.status === 401) {
-            setSave((prev) => !prev)
+            setFavourites((prev) => !prev)
             return router.push('/login')
         }
         if (!response.success) {
-            setSave((prev) => !prev)
+            setFavourites((prev) => !prev)
         }
 
     }

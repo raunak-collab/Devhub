@@ -1,7 +1,6 @@
 'use client'
 import SearchInput from '@/components/ui/SearchInput'
 
-import Link from 'next/link';
 import ToolsCard from '@/components/cards/ToolsCard';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
