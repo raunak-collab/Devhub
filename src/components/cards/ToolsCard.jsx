@@ -130,7 +130,7 @@ export default function ToolsCard({
                 {type}
             </p>
             <Link
-                href={`/tools/${title.toLowerCase().replace(" ", "-")}`}
+                href={`/tools/${title.toLowerCase().replaceAll(" ", "-")}`}
                 className="absolute bottom-2.5
               right-3.5 text-sm text-violet-500 
               flex gap-1.5 hover:text-white 

@@ -88,35 +88,6 @@ const commonPatterns = [
 ];
 
 /* ========================================= */
-/* COPY BUTTON */
-/* ========================================= */
-
-function CopyButton({ copied, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={!onClick}
-      className="flex items-center gap-2 rounded-lg border border-slate-700 bg-[#0E1625] px-3 py-2 text-xs font-medium text-slate-300 transition hover:border-violet-500/40 hover:bg-[#111b2c] hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
-    >
-      {copied ? (
-        <>
-          <Check
-            size={15}
-            className="text-emerald-400"
-          />
-          Copied
-        </>
-      ) : (
-        <>
-          <Copy size={15} />
-          Copy
-        </>
-      )}
-    </button>
-  );
-}
-
-/* ========================================= */
 /* MAIN PAGE */
 /* ========================================= */
 
@@ -222,7 +193,8 @@ export default function RegexTesterPage() {
 
         while (
           (match = pattern.exec(text)) !== null
-        ) {
+        ) 
+        {
           matches.push({
             index: match.index,
             value: match[0],
@@ -775,7 +747,7 @@ export default function RegexTesterPage() {
                 }}
                 placeholder="Enter text to test your regex against..."
                 spellCheck={false}
-                className="min-h-[220px] w-full resize-y rounded-xl border border-slate-800 bg-[#0A101C] p-5 font-mono text-sm leading-7 text-slate-300 outline-none transition placeholder:text-slate-600 focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10"
+                className="min-h-55 w-full resize-y rounded-xl border border-slate-800 bg-[#0A101C] p-5 font-mono text-sm leading-7 text-slate-300 outline-none transition placeholder:text-slate-600 focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10"
               />
 
             </div>
@@ -837,7 +809,7 @@ export default function RegexTesterPage() {
 
               </div>
 
-              <div className="min-h-[120px] whitespace-pre-wrap break-words rounded-xl border border-slate-800 bg-[#0A101C] p-5 font-mono text-sm leading-7 text-slate-400">
+              <div className="min-h-30 whitespace-pre-wrap wrap-break-word rounded-xl border border-slate-800 bg-[#0A101C] p-5 font-mono text-sm leading-7 text-slate-400">
 
                 {!result.tested ? (
                   <span className="text-slate-600">
