@@ -121,6 +121,7 @@ export default function XMLFormatterPage() {
     /* Element */
 
     if (node.nodeType === Node.ELEMENT_NODE) {
+      console.log(node)
       const serializer = new XMLSerializer();
 
       const openingTag = serializer.serializeToString(node)
@@ -134,6 +135,7 @@ export default function XMLFormatterPage() {
        */
 
       let tag = `<${node.tagName}`;
+  
 
       for (const attribute of Array.from(node.attributes)) {
         tag += ` ${attribute.name}="${attribute.value

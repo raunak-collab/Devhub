@@ -120,7 +120,7 @@ export default function SavedToolsCard({
                 </span>
 
                 <Link
-                    href={title.toLowerCase().replace(" ", "-")}
+                    href={`/tools/${title.toLowerCase().replace(" ", "-")}`}
                     className="
                         flex items-center gap-1.5
                         text-xs font-medium

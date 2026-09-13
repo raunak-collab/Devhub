@@ -20,7 +20,7 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import { dump,load } from "js-yaml";
+import { dump, load } from "js-yaml";
 
 /* ========================================= */
 /* SAMPLE YAML */
@@ -60,7 +60,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* PARSE YAML */
-/* ========================================= */
+  /* ========================================= */
 
   const parseYAML = (value) => {
     try {
@@ -74,7 +74,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* FORMAT YAML */
-/* ========================================= */
+  /* ========================================= */
 
   const formatYAML = () => {
     if (!yamlInput.trim()) {
@@ -114,7 +114,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* MINIFY YAML */
-/* ========================================= */
+  /* ========================================= */
 
   const minifyYAML = () => {
     if (!yamlInput.trim()) {
@@ -134,11 +134,11 @@ export default function YAMLFormatterPage() {
        */
 
       const result = dump(data, {
-          flowLevel: 0,
-          noRefs: true,
-          lineWidth: -1,
-          sortKeys: false,
-        })
+        flowLevel: 0,
+        noRefs: true,
+        lineWidth: -1,
+        sortKeys: false,
+      })
         .trim();
 
       setOutput(result);
@@ -162,7 +162,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* VALIDATE YAML */
-/* ========================================= */
+  /* ========================================= */
 
   const validateYAML = () => {
     if (!yamlInput.trim()) {
@@ -186,7 +186,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* COPY OUTPUT */
-/* ========================================= */
+  /* ========================================= */
 
   const copyOutput = async () => {
     if (!output) return;
@@ -206,7 +206,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* DOWNLOAD YAML */
-/* ========================================= */
+  /* ========================================= */
 
   const downloadYAML = () => {
     if (!output) return;
@@ -233,7 +233,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* LOAD SAMPLE */
-/* ========================================= */
+  /* ========================================= */
 
   const loadSample = () => {
     setYamlInput(sampleYAML);
@@ -245,7 +245,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* LOAD YAML FILE */
-/* ========================================= */
+  /* ========================================= */
 
   const handleFileUpload = (event) => {
     const file = event.target.files?.[0];
@@ -271,7 +271,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* CLEAR */
-/* ========================================= */
+  /* ========================================= */
 
   const handleClear = () => {
     setYamlInput("");
@@ -283,7 +283,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* LOAD HISTORY */
-/* ========================================= */
+  /* ========================================= */
 
   const loadHistory = (item) => {
     setYamlInput(item);
@@ -295,7 +295,7 @@ export default function YAMLFormatterPage() {
 
   /* ========================================= */
   /* CLEAR HISTORY */
-/* ========================================= */
+  /* ========================================= */
 
   const clearHistory = () => {
     setHistory([]);
@@ -553,13 +553,12 @@ export default function YAMLFormatterPage() {
                 <div className="flex items-center gap-2">
 
                   <div
-                    className={`h-2 w-2 rounded-full ${
-                      status === "Invalid YAML"
+                    className={`h-2 w-2 rounded-full ${status === "Invalid YAML"
                         ? "bg-red-500"
                         : status === "Valid YAML"
-                        ? "bg-emerald-500"
-                        : "bg-violet-500"
-                    }`}
+                          ? "bg-emerald-500"
+                          : "bg-violet-500"
+                      }`}
                   />
 
                   <span className="text-sm font-medium text-slate-200">
@@ -569,13 +568,12 @@ export default function YAMLFormatterPage() {
                 </div>
 
                 <span
-                  className={`text-xs ${
-                    status === "Invalid YAML"
+                  className={`text-xs ${status === "Invalid YAML"
                       ? "text-red-400"
                       : status === "Valid YAML"
-                      ? "text-emerald-400"
-                      : "text-slate-500"
-                  }`}
+                        ? "text-emerald-400"
+                        : "text-slate-500"
+                    }`}
                 >
                   {status}
                 </span>
@@ -841,7 +839,7 @@ export default function YAMLFormatterPage() {
               </p>
 
               <pre className="overflow-auto font-mono text-sm leading-7 text-violet-400">
-{`user:
+                {`user:
   name: Raunak
   role: Developer
   skills:

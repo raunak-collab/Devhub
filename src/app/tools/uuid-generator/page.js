@@ -9,7 +9,6 @@ import {
   Eraser,
   FileCode2,
   History,
-  RefreshCw,
   ShieldCheck,
   Sparkles,
   Trash2,

@@ -43,6 +43,8 @@ function NavbarContent() {
         }
     };
 
+    const Tools =  pathname.split("/").slice(0,2).join("/")
+
     return (
         <>
             <header className="sticky top-0 z-50 border-b border-[#1F2937] backdrop-blur-md">
@@ -76,12 +78,12 @@ function NavbarContent() {
 
                         <Link
                             href="/tools"
-                            className={`relative transition-all duration-300 hover:text-white ${pathname === "/tools" ? "text-white" : ""
+                            className={`relative transition-all duration-300 hover:text-white ${Tools === "/tools" ? "text-white" : ""
                                 }`}
                         >
                             Tools
 
-                            {pathname === "/tools" && (
+                            {Tools === "/tools" && (
                                 <span className="absolute left-0 top-10 h-0.5 w-full rounded-full bg-violet-600" />
                             )}
                         </Link>
