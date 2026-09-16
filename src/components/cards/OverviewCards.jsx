@@ -2,7 +2,7 @@
 export default function OverviewCards({ icon, title, bgIcon, data }) {
   
     return (
-        <div className='rounded-md border border-[#1F2937] bg-[#0B1220] p-5 items-center flex gap-4'>
+        <div className='rounded-lg border border-[#1F2937] bg-[#0B1220] p-5 items-center flex gap-4'>
             <div className={`${bgIcon} h-fit p-2.5 rounded-lg`}>
                 {icon}
             </div>

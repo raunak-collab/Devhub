@@ -151,7 +151,7 @@ export default function Tools() {
 
     return (
         <main className='min-h-[calc(100vh-4.1rem)] border'>
-            <section className="flex flex-col items-center gap-8 px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+            <section className="flex flex-col items-center gap-8 px-4 py-8 sm:px-6 sm:py-10 mt-6 lg:px-8">
                 {/* Upper */}
                 <div className='w-full flex gap-6 flex-col items-center max-w-4xl'>
                     {/* heading */}

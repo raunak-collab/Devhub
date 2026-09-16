@@ -43,22 +43,25 @@ function NavbarContent() {
         }
     };
 
-    const Tools =  pathname.split("/").slice(0,2).join("/")
+    const Tools = pathname.split("/").slice(0, 2).join("/")
 
     return (
         <>
-            <header className="sticky top-0 z-50 border-b border-[#1F2937] backdrop-blur-md">
-                <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
+            <header className="sticky top-5 z-50 border rounded-2xl bg-[#080F1D]  border-[#1F2937] backdrop-blur-md mx-5">
+                <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
 
                     {/* Logo */}
-                    <Link href="/">
+                    <Link href="/" className="flex gap-2.5 items-center">
                         <Image
-                            src="/images/DevHub.png"
-                            width={115}
-                            height={40}
+                            src="/images/logo.png"
+                            width={30}
+                            height={30}
                             alt="DevHub"
-                            className="mr-5 w-28 lg:w-32"
+                            className=""
                         />
+                        <span className="text-white text-[22px] font-semibold tracking-[-0.5px]">
+                            Dev<span className="text-violet-500">Hub</span>
+                        </span>
                     </Link>
 
                     {/* Desktop Nav */}
@@ -127,7 +130,7 @@ function NavbarContent() {
                     </nav>
 
                     {/* Desktop Search */}
-                    <div className="hidden w-full max-w-sm md:block lg:mx-8">
+                    <div className="hidden max-w-sm md:block lg:mx-8">
                         <SearchInput
                             search={search}
                             onChange={handleSearch}
@@ -179,20 +182,12 @@ function NavbarContent() {
 
             {/* Mobile Drawer */}
             <div
-                className={`fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] w-full overflow-y-auto bg-[#0B1020] transition-all duration-300 lg:hidden ${open
+                className={`fixed left-0 top-22  z-50  h-[calc(100vh-4rem)] w-full overflow-y-auto bg-[#0B1020] transition-all duration-300 lg:hidden ${open
                     ? "visible translate-y-0 opacity-100"
                     : "invisible -translate-y-2 opacity-0"
                     }`}
             >
                 <div className="space-y-5 p-5 text-slate-400">
-
-                    {/* Mobile Search */}
-                    <SearchInput
-                        search={search}
-                        onChange={handleSearch}
-                        onKeyDown={submitSearch}
-                        placeholder="Search tools..."
-                    />
 
                     <Link
                         onClick={() => setOpen(false)}

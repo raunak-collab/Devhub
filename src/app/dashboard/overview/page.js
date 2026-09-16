@@ -6,8 +6,16 @@ import {
   MdCollectionsBookmark,
   MdAccessTime,
 } from "react-icons/md";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
+
+import {
+  ArrowRight,
+  Braces,
+  KeyRound,
+  ShieldCheck,
+  Fingerprint,
+  QrCode,
+} from "lucide-react"
+
 
 export default function Overview() {
   const overviewData = [
@@ -47,37 +55,48 @@ export default function Overview() {
     },
   ];
 
+
   const recentTools = [
     {
       name: "JSON Formatter",
-      image: "/images/1.png",
+      icon: Braces,
+      iconColor: "text-white",
+      iconBg: "bg-violet-600",
       time: "2 mins ago",
       href: "/tools/json-formatter",
     },
     {
       name: "Password Generator",
-      image: "/images/2.png",
+      icon: KeyRound,
+      iconColor: "text-white",
+      iconBg: "bg-amber-600",
       time: "10 mins ago",
       href: "/tools/password-generator",
     },
     {
       name: "JWT Decoder",
-      image: "/images/3.png",
+      icon: ShieldCheck,
+      iconColor: "text-white",
+      iconBg: "bg-cyan-600",
       time: "25 mins ago",
       href: "/tools/jwt-decoder",
     },
-    {
-      name: "Regex Tester",
-      image: "/images/4.png",
-      time: "1 hour ago",
-      href: "/tools/regex-tester",
-    },
-    {
-      name: "SQL Formatter",
-      image: "/images/5.png",
-      time: "2 hours ago",
-      href: "/tools/sql-formatter",
-    },
+    // {
+    //   name: "Regex Tester",
+    //   icon: Fingerprint,
+    //   iconColor: "text-white",
+    //   iconBg: "bg-emerald-600",
+    //   time: "1 hour ago",
+    //   href: "/tools/regex-tester",
+    // },
+    // {
+    //   name: "SQL Formatter",
+    //   icon: QrCode,
+    //   iconColor: "text-white",
+    //   iconBg: "bg-orange-600",
+    //   time: "2 hours ago",
+    //   href: "/tools/sql-formatter",
+    // },
   ];
 
   const categories = [
@@ -109,7 +128,7 @@ export default function Overview() {
   ];
 
   return (
-    <div className="flex flex-col gap-6 min-h-full px-4 py-6 sm:px-6 lg:px-8">
+    <div className="flex flex-col gap-6 min-h-full px-4 py-5 sm:px-6 lg:px-8">
 
       {/* Heading */}
       <div>
@@ -144,7 +163,7 @@ export default function Overview() {
       <div className="grid lg:grid-cols-2 gap-4">
 
         {/* Recent Tools */}
-        <div className="rounded-md border border-[#1F2937] bg-[#0B1220] p-5">
+        <div className="rounded-lg border border-[#1F2937] bg-[#0B1220] p-5">
 
           {/* Card Header */}
           <div className="mb-4 flex items-center justify-between">
@@ -164,37 +183,30 @@ export default function Overview() {
           {/* Tools */}
           <div className="flex flex-col">
 
-            {recentTools.map((tool, index) => (
+            {recentTools.map(({ name, icon: Icon, iconBg, iconColor, href, time }, index) => (
               <Link
-                key={tool.name}
-                href={tool.href}
-                className={`group flex items-center justify-between py-3 transition hover:bg-white/3 ${
-                  index !== recentTools.length - 1
-                    ? "border-b border-[#1F2937]"
-                    : ""
-                }`}
+                key={name}
+                href={href}
+                className={`group flex items-center justify-between py-3 transition hover:bg-white/3 ${index !== recentTools.length - 1
+                  ? "border-b border-[#1F2937]"
+                  : ""
+                  }`}
               >
                 {/* Left */}
                 <div className="flex items-center gap-3">
 
-                  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-white/5">
-                    <Image
-                      src={tool.image}
-                      width={25}
-                      height={25}
-                      alt={tool.name}
-                      className="object-contain"
-                    />
+                  <div className={`flex h-9 w-9 items-center justify-center rounded-md ${iconBg} ${iconColor}`}>
+                    <Icon />
                   </div>
 
                   <span className="text-sm text-slate-300 transition group-hover:text-white">
-                    {tool.name}
+                    {name}
                   </span>
                 </div>
 
                 {/* Time */}
                 <span className="text-xs text-slate-500">
-                  {tool.time}
+                  {time}
                 </span>
               </Link>
             ))}
@@ -203,7 +215,7 @@ export default function Overview() {
         </div>
 
         {/* Top Categories */}
-        <div className="rounded-md border border-[#1F2937] bg-[#0B1220] p-5">
+        <div className="rounded-lg border border-[#1F2937] bg-[#0B1220] p-5">
 
           <div className="mb-5">
             <h2 className="font-semibold text-white">

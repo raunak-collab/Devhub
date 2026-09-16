@@ -53,15 +53,17 @@ export default function Sidebar() {
     ];
 
     return (
-        <>
+        <div className="mt-5">
             {/* Mobile / Tablet Menu Button */}
-            <button
-                onClick={() => setIsOpen(true)}
-                className="fixed left-4 top-20 z-40 rounded-md border border-slate-700 bg-[#0B1220] p-2.5 text-slate-300 transition hover:bg-white/5 lg:hidden"
-                aria-label="Open sidebar"
-            >
-                <LuMenu size={22} />
-            </button>
+            {!isOpen && (
+                <button
+                    onClick={() => setIsOpen(true)}
+                    className="fixed left-6 top-22 z-50 rounded-md border border-slate-700 bg-[#0B1220] p-2.5 text-slate-300 transition hover:bg-white/5 lg:hidden"
+                    aria-label="Open sidebar"
+                >
+                    <LuMenu size={22} />
+                </button>
+            )}
 
             {/* Overlay */}
             {isOpen && (
@@ -74,13 +76,13 @@ export default function Sidebar() {
             {/* Sidebar */}
             <aside
                 className={`
-                    fixed left-0 top-0 z-50 h-full w-64
-                    border-r border-slate-800/70
-                    bg-[#080F1D]
+                    fixed left-0 top-21.5 z-50 w-64
+                    border rounded-2xl border-slate-800/70
+                    bg-[#080F1D] 
                     transition-transform duration-300 ease-in-out
                     lg:static lg:z-auto lg:block lg:w-60
-                    lg:translate-x-0
-                    ${isOpen ? "translate-x-0" : "-translate-x-full"}
+                    lg:translate-x-0 lg:ml-5 lg:mt-0
+                    ${isOpen ? "translate-x-0 ml-5 mt-5" : "-translate-x-full"}
                 `}
             >
                 {/* Mobile Close Button */}
@@ -116,6 +118,6 @@ export default function Sidebar() {
                     ))}
                 </nav>
             </aside>
-        </>
+        </div>
     );
 }
