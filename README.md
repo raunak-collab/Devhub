@@ -126,4 +126,3 @@ DevHub/
 ├── postcss.config.mjs
 ├── tailwind.config.js
 └── README.md
-# QueueLess-Frontend
