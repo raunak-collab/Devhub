@@ -35,7 +35,7 @@ const historyData = [
     status: 201,
     responseTime: "528 ms",
     time: "18 minutes ago",
-    size: "856 B",
+    size: "856 KB",
   },
   {
     id: 3,
