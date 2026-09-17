@@ -7,7 +7,7 @@ export default function FavouritesCard({ title, desc, icon }) {
             href="/"
             className="
                 group
-                flex min-h-[120px] w-full
+                flex min-h-30 w-full
                 items-start justify-between
                 gap-4
                 rounded-lg

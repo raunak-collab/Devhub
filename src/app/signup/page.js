@@ -43,7 +43,7 @@ export default function SignUp() {
 
 
     return (
-        <div className="flex justify-center items-center h-[calc(100vh-4.1rem)]">
+        <div className="flex justify-center mt-10 items-center h-[calc(100vh-4.1rem)]">
             <div className="bg-[#0B1220] border rounded-md border-[#1F2937]  px-7 py-6 w-full max-w-md">
                 <h1 className="text-xl text-center text-white mb-1 font-semibold">Create Your DevHub Account</h1>
                 <p className="text-center text-sm text-gray-400">

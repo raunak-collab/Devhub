@@ -128,7 +128,7 @@ export default function PricingPage() {
 
           <h1 className="text-4xl font-extrabold tracking-[-1.5px] sm:text-5xl lg:text-6xl">
             Choose the plan that
-            <span className="block bg-gradient-to-r from-[#A78BFA] via-[#7C3AED] to-[#3B82F6] bg-clip-text text-transparent">
+            <span className="block bg-linear-to-r from-[#A78BFA] via-[#7C3AED] to-[#3B82F6] bg-clip-text text-transparent">
               works for you
             </span>
           </h1>
@@ -180,7 +180,7 @@ export default function PricingPage() {
                 key={plan.name}
                 className={`relative rounded-2xl border p-7 transition duration-300 hover:-translate-y-1 ${
                   plan.popular
-                    ? "border-[#7C3AED] bg-gradient-to-b from-[#16102C] to-[#0B1220] shadow-2xl shadow-[#653ADB]/15"
+                    ? "border-[#7C3AED] bg-linear-to-b from-[#16102C] to-[#0B1220] shadow-2xl shadow-[#653ADB]/15"
                     : "border-[#27272A] bg-[#0B1220]"
                 }`}
               >
@@ -204,7 +204,7 @@ export default function PricingPage() {
 
                 <h2 className="text-xl font-bold">{plan.name}</h2>
 
-                <p className="mt-2 min-h-[48px] text-sm leading-6 text-[#94A3B8]">
+                <p className="mt-2 min-h-12 text-sm leading-6 text-[#94A3B8]">
                   {plan.description}
                 </p>
 
