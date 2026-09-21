@@ -13,13 +13,19 @@ export default function Footer() {
 
                         {/* Left Section */}
                         <div className="max-w-xs">
-                            <Image
-                                src="/images/DevHub.png"
-                                width={150}
-                                height={40}
-                                alt="DevHub"
-                            />
-
+                            {/* Logo */}
+                            <Link href="/" className="flex gap-2.5 items-center">
+                                <Image
+                                    src="/images/logo.png"
+                                    width={35}
+                                    height={30}
+                                    alt="DevHub"
+                                    className=""
+                                />
+                                <span className="text-white text-2xl font-semibold tracking-[-0.5px]">
+                                    Dev<span className="text-violet-500">Hub</span>
+                                </span>
+                            </Link>
                             <p className="mt-4 text-sm leading-7 text-gray-400">
                                 All developer tools in one place.
                                 <br />
