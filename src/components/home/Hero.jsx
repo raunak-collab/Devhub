@@ -4,7 +4,7 @@ import SearchInput from "../ui/SearchInput";
 import PopularTools from "../cards/PopularToolChip";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import HandleSearch from "@/utils/HandleSearch";
+import HandleSearch from "../../utils/HandleSearch";
 import { useSearchParams, useRouter } from "next/navigation";
 
 export default function Hero() {

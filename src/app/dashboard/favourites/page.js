@@ -1,10 +1,10 @@
 "use client";
 
-import FavouritesCard from "@/components/cards/FavouritesCard";
+import FavouritesCard from "../../../components/cards/FavouritesCard";
 import { FaRegStar } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { useEffect, useState } from "react";
-import { AllTools } from "@/app/AllTools";
+import { AllTools } from "../../../data/AllTools";
 
 export default function Favourites() {
 

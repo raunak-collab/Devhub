@@ -1,12 +1,12 @@
 'use client'
-import SearchInput from '@/components/ui/SearchInput'
+import SearchInput from '../../components/ui/SearchInput'
 
-import ToolsCard from '@/components/cards/ToolsCard';
+import ToolsCard from '../../components/cards/ToolsCard';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import HandleSearch from '@/utils/HandleSearch';
-import { AllTools } from '../AllTools.js'
+import HandleSearch from '../../utils/HandleSearch';
+import { AllTools } from '../../data/AllTools.js'
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 

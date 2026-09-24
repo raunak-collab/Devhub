@@ -1,6 +1,6 @@
 'use client'
-import { createCollectionAction } from '@/action/userAction';
-import Input from '@/components/ui/Input'
+import { createCollectionAction } from '../../../../action/userAction';
+import Input from '../../../../components/ui/Input'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'

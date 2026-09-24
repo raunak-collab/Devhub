@@ -1,4 +1,4 @@
-import getLoggedUser from "@/data/Auth";
+import getLoggedUser from "../../../data/Auth";
 
 
 export async function GET() {

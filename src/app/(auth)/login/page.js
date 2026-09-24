@@ -1,13 +1,14 @@
-'use client'
-import Input from "@/components/ui/Input";
+"use client"
+import Input from "../../../components/ui/Input";
 import { useActionState, useEffect, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { ImGithub } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
-import { loginAction } from "@/action/userAction";
+import { loginAction } from "../../../action/userAction";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
+import { googleLogin, githubLogin } from "../../../action/authAction";
 
 export default function SignIn() {
     const [hide, setHide] = useState(true)
@@ -16,7 +17,7 @@ export default function SignIn() {
     const [password, setpassword] = useState('')
 
     const router = useRouter()
-    const {login} = useAuth()
+    const { login } = useAuth()
     const [state, formAction, isPending] = useActionState(loginAction, { success: false })
 
     useEffect(() => {
@@ -87,7 +88,7 @@ export default function SignIn() {
                         hover:bg-violet-500 transition-colors
                          duration-200 cursor-pointer"
                     >
-                       Login
+                        Login
                     </button>
                 </form>
                 {/* Success and error*/}
@@ -102,8 +103,27 @@ export default function SignIn() {
                         <div className="flex-1 h-px bg-[#1F2937]" />
                     </div>
                     <div className="flex gap-1.5">
-                        <button className="flex justify-center items-center gap-3 h-10 w-full rounded-md border border-[#1F2937] bg-[#0B1220] hover:bg-[#111827] text-sm text-white transition-all duration-500"><ImGithub size={18} /> Github</button>
-                        <button className="flex justify-center items-center gap-3 h-10 w-full rounded-md border border-[#1F2937] hover:bg-[#111827] bg-[#0B1220] text-sm text-white transition-all duration-500"><FcGoogle size={20} /> Google</button>
+                        {/* Github login */}
+                        <form
+                            className="h-10 flex justify-center items-center text-sm text-white transition-all duration-500 w-full rounded-md border border-[#1F2937] bg-[#0B1220] hover:bg-[#111827]"
+                            action={githubLogin}
+                        >
+                            <button type="submit" className="flex gap-3">
+                                <ImGithub size={19} />
+                                Github
+                            </button>
+                            {/* Google login */}
+                        </form>
+                        <form
+                            className="h-10 flex justify-center items-center text-sm text-white transition-all duration-500 w-full rounded-md border border-[#1F2937] hover:bg-[#111827] bg-[#0B1220]"
+                            action={googleLogin}
+                        >
+                            <button type="submit" className="flex gap-3">
+                                <FcGoogle size={21} />
+                                Google
+                            </button>
+                        </form>
+
                     </div>
                     <div className="flex justify-center text-slate-500 gap-1 mt-2.5 text-sm">
                         <span>Don&apos;t have an account?</span>

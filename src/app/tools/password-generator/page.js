@@ -225,7 +225,7 @@ export default function PasswordGeneratorPage() {
 
         <div className="absolute left-1/2 top-0 z-0 h-80 w-80 -translate-x-1/2 rounded-full bg-violet-600/15 blur-[120px]" />
 
-        <div className="relative mx-auto max-w-7xl px-6 pb-12 pt-12">
+        <div className="relative mx-3 max-w-7xl px-6 pb-12 pt-12">
           {/* Breadcrumb */}
 
           <div className="mb-6 flex items-center gap-2 text-sm text-slate-500">

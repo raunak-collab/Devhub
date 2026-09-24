@@ -1,5 +1,5 @@
-import getLoggedUser from "@/data/Auth";
-import { FavouritesTools } from "@/models/favouritesToolsModel";
+import getLoggedUser from "../../../data/Auth";
+import { FavouritesTools } from "../../../models/favouritesToolsModel";
 
 
 export async function GET() {

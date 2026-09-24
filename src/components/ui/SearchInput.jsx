@@ -2,7 +2,7 @@
 
 import { Search } from "lucide-react";
 import { useRef } from "react";
-import useCtrlk from "@/hooks/useCtrlK";
+import useCtrlk from "../../hooks/useCtrlK";
 
 export default function SearchInput({ placeholder, onChange, search, onKeyDown }) {
   const inputRef = useRef(null)

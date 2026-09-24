@@ -1,16 +1,18 @@
 'use server'
 
-import connectDb from "@/lib/connectDb"
-import { loginSchema, registerSchema } from "@/lib/schema/userSchema"
-import { User } from "@/models/userModels"
+import connectDb from "../lib/connectDb"
+import { loginSchema, registerSchema } from "../lib/schema/userSchema"
+import { User } from "../models/userModels"
 import z from "zod"
 import bcrypt from "bcrypt"
-import { Session } from "@/models/sessionModel"
+import { Session } from "../models/sessionModel"
 import { cookies } from "next/headers"
-import getLoggedUser, { signedCookie } from "@/data/Auth"
-import { SavedTools } from "@/models/savedToolsModel"
-import { FavouritesTools } from "@/models/favouritesToolsModel"
-import Collection from "@/models/collectionModel"
+import getLoggedUser, { signedCookie } from "../data/Auth"
+import { SavedTools } from "../models/savedToolsModel"
+import { FavouritesTools } from "../models/favouritesToolsModel"
+import Collection from "../models/collectionModel"
+import oAuthUser from "./authAction"
+import { signOut } from "../auth"
 
 
 export default async function registerAction(_, formData) {
@@ -115,10 +117,10 @@ export async function loginAction(_, formData) {
 export async function logoutAction() {
     await connectDb()
 
-    const response = { success: true, message: 'Logout Successfully!' }
-
     const cookieStore = await cookies()
     const cookie = cookieStore.get('userId')
+
+    const response = { success: true, message: 'Logout Successfully!' }
 
     if (!cookie) {
         return response

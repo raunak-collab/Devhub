@@ -1,23 +1,41 @@
 import { NextResponse } from "next/server";
+import { auth } from "./auth";
 import getLoggedUser from "./data/Auth";
 
-export async function proxy(request) {
+export default auth(async function proxy(request) {
 
-    const user = await getLoggedUser()
+  if (request.nextUrl.pathname === "/dashboard") {
+    return NextResponse.redirect(
+      new URL("/dashboard/overview", request.nextUrl.origin)
+    );
+  }
 
-    if (user instanceof Response) {
-        return NextResponse.redirect(new URL('/login', request.nextUrl.origin))
-    }
+  // NextAuth user
+  // const sessionUser = request.auth;
+  // console.log('+++++++++++++++++ User', sessionUser)
 
-    const userId = request.cookies.get('userId')
-    
-    if (!userId) {
-        return NextResponse.redirect(new URL('/login', request.nextUrl.origin))
-    } else {
-        return NextResponse.redirect(new URL('/dashboard/overview', request.nextUrl.origin))
-    }
-}
+  // Your existing authentication
+  const user = await getLoggedUser();
+  console.log('+++++++++++++++++ User', user)
+
+  // Neither authentication exists
+  if (user instanceof Response || user === 'null') {
+    return NextResponse.redirect(
+      new URL("/login", request.nextUrl.origin)
+    );
+  }
+
+  const userId = request.cookies.get("userId");
+
+  if (!userId && user === 'null') {
+    console.log('useid')
+    return NextResponse.redirect(
+      new URL("/login", request.nextUrl.origin)
+    );
+  }
+  return NextResponse.next()
+});
 
 export const config = {
-    matcher: ['/dashboard'],
-}
+  matcher: ["/dashboard", "/dashboard/:path"]
+};

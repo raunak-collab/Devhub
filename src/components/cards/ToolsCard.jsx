@@ -4,7 +4,7 @@ import { IoBookmarkOutline} from "react-icons/io5"
 import { FaRegStar } from "react-icons/fa";
 import { ArrowRight } from "lucide-react";
 import { PiBookmarkSimpleFill } from "react-icons/pi";
-import { toggleFavouriteToolsAction, toggleSavedToolsAction } from "@/action/userAction";
+import { toggleFavouriteToolsAction, toggleSavedToolsAction } from "../../action/userAction";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -90,11 +90,11 @@ export default function ToolsCard({
             <div className="flex justify-between mb-3">
                 {icon}
                 <div className="flex h-6 gap-3.5 items-center text-slate-300">
-                    <button type="button" onClick={() => handleToggleFavouriteTools(title)}>
+                    <button type="button" title="Login to favourites" onClick={() => handleToggleFavouriteTools(title)}>
                         {favourites ? <FaStar size={21} /> : <FaRegStar size={21} />}
                     </button>
 
-                    <button onClick={() => handleToggleSaveTools(title)}
+                    <button type="button" title="Login to bookmarks" onClick={() => handleToggleSaveTools(title)}
                         className="cursor-pointer" type="button">
                         {save ? <PiBookmarkSimpleFill size={21} /> : <IoBookmarkOutline size={21} />}
                     </button>

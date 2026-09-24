@@ -1,11 +1,17 @@
-import connectDb from '@/lib/connectDb'
-import { Session } from '@/models/sessionModel'
-import { User } from '@/models/userModels'
+import oAuthUser from '../action/authAction'
+import connectDb from '../lib/connectDb'
+import { Session } from '../models/sessionModel'
+import { User } from '../models/userModels'
 import { createHmac } from 'crypto'
 import { cookies } from 'next/headers'
 
 
 export default async function getLoggedUser() {
+    const oauthuser = await oAuthUser()
+    
+    if (oauthuser) {
+        return oauthuser
+    }
     const cookieStore = await cookies()
     const [sessionId, signatureFromCookies] = cookieStore.get('userId')?.value.split('.') || []
 

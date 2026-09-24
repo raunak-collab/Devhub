@@ -30,8 +30,8 @@ import {
     FaCog,
     FaNetworkWired,
 } from "react-icons/fa";
-import { AllTools } from "@/app/AllTools";
-import { toggleFavouriteToolsAction } from "@/action/userAction";
+import { AllTools } from "../../../../data/AllTools";
+import { toggleFavouriteToolsAction } from "../../../../action/userAction";
 
 
 /* =========================

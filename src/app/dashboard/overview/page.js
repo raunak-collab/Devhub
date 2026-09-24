@@ -1,4 +1,5 @@
-import OverviewCards from "@/components/cards/OverviewCards";
+'use client'
+import OverviewCards from "../../../components/cards/OverviewCards";
 import Link from "next/link";
 import { CiStar } from "react-icons/ci";
 import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
@@ -15,6 +16,7 @@ import {
   Fingerprint,
   QrCode,
 } from "lucide-react"
+import { useAuth } from "../../../app/context/AuthContext";
 
 
 export default function Overview() {
@@ -127,6 +129,10 @@ export default function Overview() {
     },
   ];
 
+  const {user, loading} = useAuth()
+  
+  const username = user?.name?.split(' ')[0] || 'user'
+
   return (
     <div className="flex flex-col gap-6 min-h-full px-4 py-5 sm:px-6 lg:px-8">
 
@@ -136,10 +142,10 @@ export default function Overview() {
           Dashboard
         </h1>
 
-        <h4 className="text-slate-500">
+        <h4 className="flex gap-1.5 text-slate-500">
           Welcome back,{" "}
-          <span className="text-slate-400">
-            Dear User 👋
+          <span className="flex flex-row text-slate-400">
+            Dear {loading ? <div className="h-5 w-20"></div> : `${username} 👋` } 
           </span>
         </h4>
       </div>

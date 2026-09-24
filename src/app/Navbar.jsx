@@ -6,9 +6,10 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import SearchInput from "../components/ui/SearchInput";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import HandleSearch from "@/utils/HandleSearch";
-import { logoutAction } from "@/action/userAction";
-import { useAuth } from "@/app/context/AuthContext";
+import HandleSearch from "../utils/HandleSearch";
+import { logoutAction } from "../action/userAction";
+import { useAuth } from "../app/context/AuthContext";
+import { signOut, useSession } from "next-auth/react";
 
 function NavbarContent() {
     const [open, setOpen] = useState(false);
@@ -22,13 +23,20 @@ function NavbarContent() {
 
     const { loading, user, logout } = useAuth();
 
+    const { data: session } = useSession()
 
     const handleLogout = async () => {
-        const response = await logoutAction();
-
-        if (response.success) {
+        if (session !== null) {
             logout()
-            router.push("/login");
+            await signOut({ redirectTo: "/login" })
+        }
+        else {
+            const response = await logoutAction();
+
+            if (response.success) {
+                logout()
+                router.push("/login");
+            }
         }
     };
 
@@ -47,7 +55,7 @@ function NavbarContent() {
 
     return (
         <>
-            <header className="sticky top-5 z-50 border rounded-2xl bg-[#080F1D]  border-[#1F2937] backdrop-blur-md mx-5">
+            <header className="sticky top-5 z-50 border rounded-2xl bg-[#080F1D]  border-[#1F2937] backdrop-blur-md mx-5.5">
                 <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
 
                     {/* Logo */}

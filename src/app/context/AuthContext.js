@@ -1,16 +1,23 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import oAuthUser from "../../action/authAction";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
+                const oAuthuser = await oAuthUser()
+
+                if (oAuthuser) {
+                    setUser(oAuthuser)
+                    return
+                }
                 const response = await fetch("/api/user", {
                     cache: "no-store",
                 });
@@ -30,8 +37,7 @@ export function AuthProvider({ children }) {
                     return;
                 }
 
-                const data = await response.json();
-
+                const data = await response.json()
                 if (response.ok) {
                     setUser(data);
                 } else {

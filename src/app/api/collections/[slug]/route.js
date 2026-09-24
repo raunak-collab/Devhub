@@ -1,6 +1,6 @@
-import getLoggedUser from "@/data/Auth";
-import connectDb from "@/lib/connectDb";
-import Collection from "@/models/collectionModel";
+import getLoggedUser from "../../../../data/Auth";
+import connectDb from "../../../../lib/connectDb";
+import Collection from "../../../../models/collectionModel";
 
 export async function GET(request, { params }) {
     const user = await getLoggedUser()

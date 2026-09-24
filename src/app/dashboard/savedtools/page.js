@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import SavedToolsCard from "@/components/cards/SavedToolsCard";
+import SavedToolsCard from "../../../components/cards/SavedToolsCard";
 import { FiSearch } from "react-icons/fi";
 import { LuSlidersHorizontal } from "react-icons/lu";
-import { AllTools } from "@/app/AllTools";
+import { AllTools } from "../../../data/AllTools";
 import { IoBookmarkOutline } from "react-icons/io5";
 
 
