@@ -129,9 +129,9 @@ export default function Overview() {
     },
   ];
 
-  const {user, loading} = useAuth()
-  
-  const username = user?.name?.split(' ')[0] || 'user'
+  const { user, loading } = useAuth()
+
+  const username = user?.name?.split(' ')[0]
 
   return (
     <div className="flex flex-col gap-6 min-h-full px-4 py-5 sm:px-6 lg:px-8">
@@ -145,7 +145,7 @@ export default function Overview() {
         <h4 className="flex gap-1.5 text-slate-500">
           Welcome back,{" "}
           <span className="flex flex-row text-slate-400">
-            Dear {loading ? <div className="h-5 w-20"></div> : `${username} 👋` } 
+            Dear {loading ? <div className="h-5 w-20"></div> : username ? `${username} 👋` : 'User'}
           </span>
         </h4>
       </div>
