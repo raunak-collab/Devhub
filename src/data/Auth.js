@@ -8,8 +8,9 @@ import { cookies } from 'next/headers'
 
 export default async function getLoggedUser() {
     const oauthuser = await oAuthUser()
-    
+
     if (oauthuser) {
+        await connectDb()
         return oauthuser
     }
     const cookieStore = await cookies()
@@ -47,7 +48,7 @@ export default async function getLoggedUser() {
         return errorResponse
     }
 
-    const user = await User.findById(session.userId).select('-password')
+    const user = await User.findById(session.userId).select('-password -__v')
 
     if (!user) {
         return errorResponse

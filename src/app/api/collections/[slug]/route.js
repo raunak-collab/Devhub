@@ -10,12 +10,12 @@ export async function GET(request, { params }) {
     }
 
     const { slug } = await params;
+    const name = slug.replaceAll("-", " ");
 
     try {
         await connectDb()
 
-        const collection = await Collection.findOne({ name: slug.replace("-"," "), userId: user.id }).select('-userId -_id -__v')
-        console.log(collection)
+        const collection = await Collection.findOne({ name, userId: user.id }).select('-userId -_id -__v')
 
         if (!collection) {
             return Response.json({ error: 'No collection found' }, { status: 404 })

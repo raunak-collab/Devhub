@@ -31,7 +31,8 @@ import {
     FaNetworkWired,
 } from "react-icons/fa";
 import { AllTools } from "../../../../data/AllTools";
-import { toggleFavouriteToolsAction } from "../../../../action/userAction";
+import { deleteCollectionAction, toggleFavouriteToolsAction } from "../../../../action/userAction";
+import Link from "next/link";
 
 
 /* =========================
@@ -193,6 +194,25 @@ export default function Page() {
     }
 
 
+    // Update collection
+    const handleDeleteCollection = async () => {
+
+        try {
+            const response = await deleteCollectionAction(slug)
+
+            if (response.status === 401) {
+                return router.push("/login");
+            }
+            return router.push('/dashboard/collections/');
+
+        } catch (err) {
+            console.error("Update collection error:", err);
+
+        }
+    };
+
+
+
     /* =========================
        COLLECTION ICON
     ========================= */
@@ -311,7 +331,7 @@ export default function Page() {
 
     return (
 
-        <div className="min-h-screen bg-[#070e19] text-white px-6">
+        <div className="mt-5 pt-1 pb-8 mx-6 rounded-2xl bg-[#070e19] text-white px-6">
 
             {/* =========================
                 HEADER
@@ -356,7 +376,7 @@ export default function Page() {
                 <div className="flex items-center gap-3">
 
                     <button
-                        onClick={() => router.push(`/collection/${slug}/edit`)}
+                        onClick={() => router.push(`/dashboard/collections/${slug}/edit`)}
                         className="
                             h-9
                             px-4
@@ -435,6 +455,7 @@ export default function Page() {
                                 </button>
 
                                 <button
+                                    onClick={handleDeleteCollection}
                                     className="
                                         w-full
                                         text-left
@@ -621,7 +642,7 @@ export default function Page() {
 
                 <div className="
                     relative
-                    w-[230px]
+                    w-57.5
                     shrink-0
                 ">
 
@@ -837,11 +858,7 @@ function ToolRow({ tool, isSaved }) {
         "Development";
 
 
-    const url =
-        tool?.url ||
-        tool?.link ||
-        "#";
-
+    const link = `/tools/${name.toLowerCase().replaceAll(' ', '-')}`
 
     return (
 
@@ -963,9 +980,8 @@ function ToolRow({ tool, isSaved }) {
 
             {/* EXTERNAL LINK */}
 
-            <a
-                href={url}
-                target="_blank"
+            <Link
+                href={link}
                 rel="noopener noreferrer"
                 className="
                     shrink-0
@@ -984,7 +1000,7 @@ function ToolRow({ tool, isSaved }) {
 
                 <ExternalLink size={16} />
 
-            </a>
+            </Link>
 
         </div>
 
@@ -1034,10 +1050,10 @@ function CollectionShimmer() {
     return (
 
         <div className="
-            min-h-screen
             bg-[#070e19]
             text-white
-            px-6
+            px-5
+             pt-1 pb-6 mt-5 mx-6 rounded-2xl
         ">
 
             {/* Header */}
@@ -1115,7 +1131,7 @@ function CollectionShimmer() {
 
             <div className="space-y-1.5">
 
-                {[1, 2, 3, 4, 5].map((item) => (
+                {[1, 2, 3, 4].map((item) => (
 
                     <div
                         key={item}

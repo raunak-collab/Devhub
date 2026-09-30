@@ -187,7 +187,7 @@ export default function CreateCollection() {
 
 
   return (
-    <div className='bg-[#0B1220] min-h-[calc(100vh-4.2rem)] relative overflow-y-auto'>
+    <div className='bg-[#0B1220] min-h-[calc(100vh-4.2rem)] my-5 pt-1 mx-6 rounded-2xl relative overflow-y-auto'>
       {/* Header */}
       <div className='flex gap-9 items-center border-b mb-3 border-[#1F2937] px-6 py-3'>
         <ArrowLeft onClick={() => router.back()} className='cursor-pointer text-slate-500' size={21} />

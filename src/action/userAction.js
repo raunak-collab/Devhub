@@ -11,8 +11,6 @@ import getLoggedUser, { signedCookie } from "../data/Auth"
 import { SavedTools } from "../models/savedToolsModel"
 import { FavouritesTools } from "../models/favouritesToolsModel"
 import Collection from "../models/collectionModel"
-import oAuthUser from "./authAction"
-import { signOut } from "../auth"
 
 
 export default async function registerAction(_, formData) {
@@ -207,7 +205,6 @@ export async function createCollectionAction(name, desc, selectedicon, selectedT
     const user = await getLoggedUser()
 
     if (user instanceof Response) {
-        console.log(user)
         return { status: user.status }
     }
 
@@ -231,5 +228,64 @@ export async function createCollectionAction(name, desc, selectedicon, selectedT
     catch (err) {
         console.log(err)
         return { success: false, error: 'Something went Wrong!' }
+    }
+}
+
+export async function editCollectionAction(slug, editedCollectionData) {
+    const user = await getLoggedUser()
+
+    if (user instanceof Response) {
+        return { status: user.status }
+    }
+
+    try {
+        await connectDb()
+
+        const name = slug.replaceAll("-", " ")
+
+        const collection = await Collection.findOneAndUpdate({ name, userId: user.id }, editedCollectionData, {
+            returnDocument: "after"
+        })
+
+        if (!collection) {
+            return { success: false, error: 'Collection not found' }
+        }
+
+        return { success: true, message: 'Edited Collection.' }
+
+    }
+    catch (err) {
+        console.error("Edit Collection Error:", err);
+
+        return {
+            success: false,
+            error: err.message || "Something went wrong."
+        };
+    }
+}
+
+export async function deleteCollectionAction(slug) {
+    const user = await getLoggedUser()
+
+    if (user instanceof Response) {
+        return { status: user.status }
+    }
+
+    try {
+        await connectDb()
+
+        const name = slug.replaceAll("-", " ")
+
+        await Collection.deleteOne({ name, userId: user.id })
+
+        return { success: true, message: 'Deleted Collection.' }
+    }
+    catch (err) {
+        console.error("Delete Collection Error:", err);
+
+        return {
+            success: false,
+            error: err.message || "Something went wrong."
+        };
     }
 }

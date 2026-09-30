@@ -148,9 +148,9 @@ export default function CollectionsPage() {
 
       </div>
 
-      {/* Collections Grid */}
+      {/* Collections Grid  // Shimmer Effect*/}
       {loading ? (
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-6 gap-x-10 md:grid-cols-2 xl:grid-cols-3">
           <div
             className="
         rounded-xl
@@ -167,30 +167,7 @@ export default function CollectionsPage() {
         h-48 w-79 
       "
           />
-          <div
-            className="
-        rounded-xl
-        border border-slate-900
-        bg-[#060e18]
-        h-48 w-79 
-      "
-          />
-          <div
-            className="
-        rounded-xl
-        border border-slate-900
-        bg-[#060e18]
-        h-48 w-79 
-      "
-          />
-          <div
-            className="
-        rounded-xl
-        border border-slate-900
-        bg-[#060e18]
-        h-48 w-79 
-      "
-          />
+
         </div>
       ) : (
         filteredCollections.length > 0 ? (
@@ -268,12 +245,26 @@ function CollectionCard({ collection }) {
   };
   const Icon = iconMap[collection?.icon?.name] || LuFolder;
 
-  function firstCapital(string) {
-    return string[0].toUpperCase() + string.slice(1)
+  function firstCapital(stringArray, index = 0) {
+    if (index === stringArray.length) {
+      return [];
+    }
+
+    const string = stringArray[index];
+    const capitalized =
+      string[0].toUpperCase() + string.slice(1);
+
+    return [
+      capitalized,
+      ...firstCapital(stringArray, index + 1)
+    ];
   }
 
-  const name = firstCapital(collection.name.split(' ')[0]) + " " + firstCapital(collection.name.split(' ')[1])
-  const desc = firstCapital(collection.desc)
+  const collectionName = collection.name.split(' ')
+  const collectionDesc = collection.desc
+
+  const name = firstCapital(collectionName).join(" ")
+  const desc = collectionDesc[0].toUpperCase() + collectionDesc.slice(1)
 
   return (
     <div
@@ -341,7 +332,7 @@ function CollectionCard({ collection }) {
         </span>
 
         <Link
-          href={`/dashboard/collections/${name.toLowerCase().replace(" ", "-")}`}
+          href={`/dashboard/collections/${name.toLowerCase().replaceAll(" ", "-")}`}
           className="
             flex gap-1
             text-xs font-medium
