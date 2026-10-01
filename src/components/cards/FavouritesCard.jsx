@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa6";
 export default function FavouritesCard({ title, desc, icon }) {
     return (
         <Link
-            href="/"
+            href={`/tools/${title.toLowerCase().replaceAll(' ', '-')}`}
             className="
                 group
                 flex min-h-30 w-full

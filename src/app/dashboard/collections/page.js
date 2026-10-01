@@ -29,6 +29,7 @@ export default function CollectionsPage() {
 
   useEffect(() => {
 
+    // Fetching Collection
     async function fetchCollections() {
       try {
         const response = await fetch('/api/collections')
@@ -37,10 +38,7 @@ export default function CollectionsPage() {
           return router.push('/login')
         }
 
-        console.log(response)
-
         const data = await response.json()
-        console.log(data)
 
         if (!data.error) {
           setCollectionsData(data)
@@ -175,7 +173,7 @@ export default function CollectionsPage() {
 
             {filteredCollections.map((collection) => (
               <CollectionCard
-                key={collection.name}
+                key={collection._id}
                 collection={collection}
               />
             ))}
@@ -230,6 +228,7 @@ function StatCard({ title, value }) {
 /* ---------------- Collection Card ---------------- */
 
 function CollectionCard({ collection }) {
+  console.log(collection)
   const iconMap = {
     FaCode,
     FaDatabase,
@@ -264,7 +263,7 @@ function CollectionCard({ collection }) {
   const collectionDesc = collection.desc
 
   const name = firstCapital(collectionName).join(" ")
-  const desc = collectionDesc[0].toUpperCase() + collectionDesc.slice(1)
+  const desc =  collectionDesc[0] ? collectionDesc[0].toUpperCase() + collectionDesc.slice(1) : 'no desc' 
 
   return (
     <div

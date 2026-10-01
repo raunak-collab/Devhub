@@ -31,9 +31,11 @@ export default async function registerAction(_, formData) {
 
         await User.create({
             name,
-            email,
-            password: hashedPassword
-        })
+            email: email.toLowerCase(),
+            password: hashedPassword,
+            provider: "credentials",
+            providerAccountId: email.toLowerCase(),
+        });
 
         return { success: true, message: "Registered Successfully ✅" }
     }
@@ -68,14 +70,18 @@ export async function loginAction(_, formData) {
 
     try {
         const { email, password } = userData;
-        const user = await User.findOne({ email })
+        
+        const user = await User.findOne({
+            email: email.toLowerCase(),
+            provider: "credentials",
+        });
 
         if (!user) {
             return {
                 errors: {
-                    email: 'Email does not exists.'
-                }
-            }
+                    email: "Credentials account does not exist.",
+                },
+            };
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password)

@@ -84,13 +84,26 @@ export default function SignUp() {
                         }
                         </button>
                     </div>
-
                     <button
                         type="submit"
-                        disabled={isPending}
-                        className="h-10 w-full cursor-pointer rounded-md border
-                      border-[#1F2937] text-[16px] text-white bg-violet-600 hover:bg-violet-500 transition-colors duration-200">
-                        Sign Up
+                        disabled={!name || !email || !password}
+                        className="h-10 w-full rounded-md border
+    border-[#1F2937] text-[16px]
+    text-white bg-violet-600
+    hover:bg-violet-500 transition-colors
+    duration-200 cursor-pointer
+    disabled:opacity-70 disabled:cursor-not-allowed
+    flex justify-center items-center gap-2"
+                    >
+                        {isPending ? (
+                            <>
+                                <span className="h-4 w-4 border-2 border-white/30
+            border-t-white rounded-full animate-spin" />
+                                Creating account...
+                            </>
+                        ) : (
+                            "Create account"
+                        )}
                     </button>
                 </form>
                 {/* Success and error*/}

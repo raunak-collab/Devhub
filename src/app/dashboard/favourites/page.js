@@ -12,6 +12,7 @@ export default function Favourites() {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true)
 
+    // FETCH FAVOURITES TOOLS
     useEffect(() => {
         async function fetchFavouritesTools() {
             try {

@@ -81,14 +81,24 @@ export default function SignIn() {
 
                     <button
                         type="submit"
-                        disabled={isPending}
+                        disabled={!email || !password}
                         className="h-10 w-full rounded-md border
-                      border-[#1F2937] text-[16px]
-                       text-white bg-violet-600
-                        hover:bg-violet-500 transition-colors
-                         duration-200 cursor-pointer"
+    border-[#1F2937] text-[16px]
+    text-white bg-violet-600
+    hover:bg-violet-500 transition-colors
+    duration-200 cursor-pointer
+    disabled:opacity-70 disabled:cursor-not-allowed
+    flex justify-center items-center gap-2"
                     >
-                        Login
+                        {isPending ? (
+                            <>
+                                <span className="h-4 w-4 border-2 border-white/30
+            border-t-white rounded-full animate-spin" />
+                                Logging in...
+                            </>
+                        ) : (
+                            "Login"
+                        )}
                     </button>
                 </form>
                 {/* Success and error*/}
