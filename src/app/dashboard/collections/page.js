@@ -263,7 +263,7 @@ function CollectionCard({ collection }) {
   const collectionDesc = collection.desc
 
   const name = firstCapital(collectionName).join(" ")
-  const desc =  collectionDesc[0] ? collectionDesc[0].toUpperCase() + collectionDesc.slice(1) : 'no desc' 
+  const desc = collectionDesc[0] ? collectionDesc[0].toUpperCase() + collectionDesc.slice(1) : 'no desc'
 
   return (
     <div
@@ -331,7 +331,10 @@ function CollectionCard({ collection }) {
         </span>
 
         <Link
-          href={`/dashboard/collections/${name.toLowerCase().replaceAll(" ", "-")}`}
+          href={`/dashboard/collections/${collection._id}/${collection.name
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, "-")}`}
           className="
             flex gap-1
             text-xs font-medium

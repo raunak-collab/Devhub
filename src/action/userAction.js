@@ -70,7 +70,7 @@ export async function loginAction(_, formData) {
 
     try {
         const { email, password } = userData;
-        
+
         const user = await User.findOne({
             email: email.toLowerCase(),
             provider: "credentials",
@@ -237,7 +237,7 @@ export async function createCollectionAction(name, desc, selectedicon, selectedT
     }
 }
 
-export async function editCollectionAction(slug, editedCollectionData) {
+export async function editCollectionAction(id, editedCollectionData) {
     const user = await getLoggedUser()
 
     if (user instanceof Response) {
@@ -247,9 +247,7 @@ export async function editCollectionAction(slug, editedCollectionData) {
     try {
         await connectDb()
 
-        const name = slug.replaceAll("-", " ")
-
-        const collection = await Collection.findOneAndUpdate({ name, userId: user.id }, editedCollectionData, {
+        const collection = await Collection.findByIdAndUpdate(id, editedCollectionData, {
             returnDocument: "after"
         })
 
@@ -270,7 +268,7 @@ export async function editCollectionAction(slug, editedCollectionData) {
     }
 }
 
-export async function deleteCollectionAction(slug) {
+export async function deleteCollectionAction(id) {
     const user = await getLoggedUser()
 
     if (user instanceof Response) {
@@ -280,9 +278,7 @@ export async function deleteCollectionAction(slug) {
     try {
         await connectDb()
 
-        const name = slug.replaceAll("-", " ")
-
-        await Collection.deleteOne({ name, userId: user.id })
+        await Collection.findByIdAndDelete(id)
 
         return { success: true, message: 'Deleted Collection.' }
     }

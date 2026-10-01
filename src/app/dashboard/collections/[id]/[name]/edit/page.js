@@ -6,7 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Check, Loader2 } from "lucide-react";
 import { FiSearch } from "react-icons/fi";
 
-import Input from "../../../../../components/ui/Input";
+import Input from "../../../../../../components/ui/Input";
 
 import {
     FaCode,
@@ -23,7 +23,7 @@ import {
 } from "react-icons/fa";
 
 import { LuFolder } from "react-icons/lu";
-import { editCollectionAction } from "../../../../../action/userAction";
+import { editCollectionAction } from "../../../../../../action/userAction";
 
 const CollectionIcon = [
     { icon: FaCode, color: "bg-violet-600/20 text-violet-400" },
@@ -114,7 +114,7 @@ const getIconName = (Icon) => {
 };
 
 export default function EditCollection() {
-    const { slug } = useParams();
+    const { id, name: collectionName } = useParams();
     const router = useRouter();
 
     const [search, setSearch] = useState("");
@@ -129,11 +129,11 @@ export default function EditCollection() {
 
     // Load existing collection
     useEffect(() => {
-        if (!slug) return;
+        if (!id || !collectionName) return;
 
         async function fetchCollection() {
             try {
-                const response = await fetch(`/api/collections/${slug}`);
+                const response = await fetch(`/api/collections/${id}`);
 
                 if (response.status === 401) {
                     router.push("/login");
@@ -175,7 +175,7 @@ export default function EditCollection() {
         }
 
         fetchCollection();
-    }, [slug, router]);
+    }, [id, collectionName, router]);
 
     // Search tools
     const filterTools = AllToolTitles.filter((title) =>
@@ -214,7 +214,7 @@ export default function EditCollection() {
         }
 
         try {
-            const response = await editCollectionAction(slug, updatedData)
+            const response = await editCollectionAction(id, updatedData)
 
             if (response.status === 401) {
                 return router.push("/login");
@@ -226,7 +226,8 @@ export default function EditCollection() {
             }
 
 
-           return router.push(`/dashboard/collections/${slug}`);
+            router.push(`/dashboard/collections/${id}/${collectionName}`);
+            router.refresh()
 
         } catch (err) {
             console.error("Update collection error:", err);

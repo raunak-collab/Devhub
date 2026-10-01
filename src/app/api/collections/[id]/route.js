@@ -9,13 +9,12 @@ export async function GET(request, { params }) {
         return user;
     }
 
-    const { slug } = await params;
-    const name = slug.replaceAll("-", " ");
+    const { id } = await params;
 
     try {
         await connectDb()
 
-        const collection = await Collection.findOne({ name, userId: user.id }).select('-userId -_id -__v')
+        const collection = await Collection.findById(id).select('-userId -_id -__v')
 
         if (!collection) {
             return Response.json({ error: 'No collection found' }, { status: 404 })

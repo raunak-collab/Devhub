@@ -30,8 +30,8 @@ import {
     FaCog,
     FaNetworkWired,
 } from "react-icons/fa";
-import { AllTools } from "../../../../data/AllTools";
-import { deleteCollectionAction, toggleFavouriteToolsAction } from "../../../../action/userAction";
+import { AllTools } from "../../../../../data/AllTools";
+import { deleteCollectionAction, toggleFavouriteToolsAction } from "../../../../../action/userAction";
 import Link from "next/link";
 
 
@@ -74,7 +74,7 @@ const categories = [
 
 export default function Page() {
 
-    const { slug } = useParams();
+    const { id, name } = useParams();
     const router = useRouter();
 
     const [loading, setLoading] = useState(true);
@@ -97,7 +97,7 @@ export default function Page() {
 
             try {
 
-                const response = await fetch(`/api/collections/${slug}`);
+                const response = await fetch(`/api/collections/${id}`);
 
                 if (response.status === 401) {
                     router.push("/login");
@@ -122,11 +122,11 @@ export default function Page() {
             }
         }
 
-        if (slug) {
+        if (name) {
             fetchCollection();
         }
 
-    }, [slug, router]);
+    }, [id, router]);
 
 
     // FETCH FAVOURITES
@@ -194,11 +194,11 @@ export default function Page() {
     }
 
 
-    // Update collection
+    // Delete collection
     const handleDeleteCollection = async () => {
 
         try {
-            const response = await deleteCollectionAction(slug)
+            const response = await deleteCollectionAction(id)
 
             if (response.status === 401) {
                 return router.push("/login");
@@ -206,7 +206,7 @@ export default function Page() {
             return router.push('/dashboard/collections/');
 
         } catch (err) {
-            console.error("Update collection error:", err);
+            console.error("Delete collection error:", err);
 
         }
     };
@@ -376,7 +376,7 @@ export default function Page() {
                 <div className="flex items-center gap-3">
 
                     <button
-                        onClick={() => router.push(`/dashboard/collections/${slug}/edit`)}
+                        onClick={() => router.push(`/dashboard/collections/${id}/${name}/edit`)}
                         className="
                             h-9
                             px-4
