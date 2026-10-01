@@ -225,9 +225,7 @@ export default function EditCollection() {
                 return;
             }
 
-
-            router.push(`/dashboard/collections/${id}/${collectionName}`);
-            router.refresh()
+           return router.push(`/dashboard/collections/${id}/${collectionName}`);
 
         } catch (err) {
             console.error("Update collection error:", err);
@@ -385,9 +383,6 @@ export default function EditCollection() {
   pb-3
   mt-2
   border-b border-[#1F2937]
-  max-h-56
-  overflow-y-auto
-  overscroll-contain
 "
                         >
                             {filterTools.slice(0, 6).map((title) => (

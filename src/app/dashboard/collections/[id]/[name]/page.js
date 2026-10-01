@@ -126,7 +126,7 @@ export default function Page() {
             fetchCollection();
         }
 
-    }, [id, router]);
+    }, [id, name, router]);
 
 
     // FETCH FAVOURITES
@@ -349,7 +349,7 @@ export default function Page() {
                 <div className="flex items-center gap-8">
 
                     <button
-                        onClick={() => router.back()}
+                        onClick={() => router.push('/dashboard/collections')}
                         className="
                             text-slate-500
                             hover:text-white
