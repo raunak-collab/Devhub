@@ -1,7 +1,7 @@
 "use client"
 import Input from "../../../components/ui/Input";
 import { useActionState, useEffect, useState } from "react";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";  
 import { ImGithub } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import { loginAction } from "../../../action/userAction";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { googleLogin, githubLogin } from "../../../action/authAction";
+import OAuthButton from "../../../components/ui/OAuthButton";
 
 export default function SignIn() {
     const [hide, setHide] = useState(true)
@@ -115,25 +116,31 @@ export default function SignIn() {
                     <div className="flex gap-1.5">
                         {/* Github login */}
                         <form
-                            className="h-10 flex justify-center items-center text-sm text-white transition-all duration-500 w-full rounded-md border border-[#1F2937] bg-[#0B1220] hover:bg-[#111827]"
+                            className="h-10 flex justify-center items-center text-sm
+        text-white transition-all duration-300 w-full rounded-md
+        border border-[#1F2937] bg-[#0B1220]
+        hover:bg-[#111827]"
                             action={githubLogin}
                         >
-                            <button type="submit" className="flex gap-3">
+                            <OAuthButton>
                                 <ImGithub size={19} />
                                 Github
-                            </button>
-                            {/* Google login */}
-                        </form>
-                        <form
-                            className="h-10 flex justify-center items-center text-sm text-white transition-all duration-500 w-full rounded-md border border-[#1F2937] hover:bg-[#111827] bg-[#0B1220]"
-                            action={googleLogin}
-                        >
-                            <button type="submit" className="flex gap-3">
-                                <FcGoogle size={21} />
-                                Google
-                            </button>
+                            </OAuthButton>
                         </form>
 
+                        {/* Google login */}
+                        <form
+                            className="h-10 flex justify-center items-center text-sm
+        text-white transition-all duration-300 w-full rounded-md
+        border border-[#1F2937] hover:bg-[#111827]
+        bg-[#0B1220]"
+                            action={googleLogin}
+                        >
+                            <OAuthButton>
+                                <FcGoogle size={21} />
+                                Google
+                            </OAuthButton>
+                        </form>
                     </div>
                     <div className="flex justify-center text-slate-500 gap-1 mt-2.5 text-sm">
                         <span>Don&apos;t have an account?</span>
