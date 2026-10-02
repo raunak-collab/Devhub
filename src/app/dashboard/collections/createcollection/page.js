@@ -1,7 +1,7 @@
 'use client'
 import { createCollectionAction } from '../../../../action/userAction';
 import Input from '../../../../components/ui/Input'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import {
@@ -148,6 +148,8 @@ export default function CreateCollection() {
   const [selectedicon, setSelectedicon] = useState(null)
   const [selectedTools, setselectedTools] = useState(new Set())
 
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter()
 
   const filterTools = AllToolTitles.filter((title) => {
@@ -156,7 +158,7 @@ export default function CreateCollection() {
   )
 
 
-  
+
   const handleChange = (title) => {
     setselectedTools((prev) => {
       const newSet = new Set(prev);
@@ -172,17 +174,35 @@ export default function CreateCollection() {
     )
   }
 
-  const handleCreateCollection = async (name, desc, selectedIcon, selectedTools) => {
-    const response = await createCollectionAction(name, desc, selectedIcon, selectedTools)
+  const handleCreateCollection = async () => {
+    if (loading || !selectedicon || name.trim().length < 4 || !selectedTools.size) return;
 
-    if (response.status === 401) {
-      return router.push('/login')
+    setLoading(true);
+
+    console.log(selectedicon)
+
+    try {
+      const response = await createCollectionAction(
+        name.trim(),
+        desc.trim(),
+        {
+          name: selectedicon.Icon.name,
+          color: selectedicon.iconColor,
+        },
+        [...selectedTools]
+      );
+
+      if (response.status === 401) {
+        return router.push('/login')
+      }
+
+      if (response.success) {
+        return router.push('/dashboard/collections')
+      }
+
+    } finally {
+      setLoading(false)
     }
-
-    if (response.success) {
-      return router.push('/dashboard/collections')
-    }
-
   }
 
 
@@ -360,10 +380,14 @@ export default function CreateCollection() {
             {/* Button */}
             <div className="flex justify-end mt-4 pb-6">
               <button
-                onClick={() => handleCreateCollection(name.trim().toLowerCase(), desc.trim().toLowerCase(),
-                  { name: selectedicon.Icon.name, color: selectedicon.iconColor }, [...selectedTools])}
+                onClick={handleCreateCollection}
                 type="button"
-                disabled={name.trim().length < 4 || !selectedicon || !selectedTools.size}
+                disabled={
+                  loading ||
+                  name.trim().length < 4 ||
+                  !selectedicon ||
+                  !selectedTools.size
+                }
                 className="
       inline-flex
       items-center
@@ -375,7 +399,7 @@ export default function CreateCollection() {
       cursor-pointer
       disabled:bg-violet-900
       disabled:cursor-not-allowed
-      py-2
+      py-2.5
       text-sm
       font-medium
       text-white
@@ -383,7 +407,8 @@ export default function CreateCollection() {
       hover:bg-violet-500
     "
               >
-                Create Collection
+                {loading && <Loader2 size={16} className="animate-spin" />}
+                {loading ? "Creating..." : "Create Collection"}
               </button>
             </div>
           </div>
