@@ -228,7 +228,6 @@ function StatCard({ title, value }) {
 /* ---------------- Collection Card ---------------- */
 
 function CollectionCard({ collection }) {
-  console.log(collection)
   const iconMap = {
     FaCode,
     FaDatabase,

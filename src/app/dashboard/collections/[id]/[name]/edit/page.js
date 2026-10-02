@@ -194,12 +194,6 @@ export default function EditCollection() {
                 }
 
                 const result = await response.json();
-                console.log("Production collection:", result);
-                console.log("Saved icon:", result.icon);
-                console.log(
-                    "Available icon names:",
-                    CollectionIcon.map((item) => item.name)
-                );
 
                 if (!response.ok || result.error) {
                     throw new Error(
@@ -320,10 +314,10 @@ export default function EditCollection() {
                 return;
             }
 
-            router.push(
-                `/dashboard/collections/${encodeURIComponent(id)}/${encodeURIComponent(updatedData.name)}`
+            return router.push(
+                `/dashboard/collections/${encodeURIComponent(id)}/${encodeURIComponent(updatedData.name.replace(/\s+/g, '-'))}`
             );
-            router.refresh();
+            // router.refresh();
         } catch (err) {
             console.error("Update collection error:", err);
             setError(
@@ -542,8 +536,8 @@ export default function EditCollection() {
 
                                         <h3
                                             className={`text-sm ${checked
-                                                    ? "text-white"
-                                                    : "text-slate-400"
+                                                ? "text-white"
+                                                : "text-slate-400"
                                                 }`}
                                         >
                                             {title}

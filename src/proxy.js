@@ -10,10 +10,6 @@ export default auth(async function proxy(request) {
     );
   }
 
-  // NextAuth user
-  // const sessionUser = request.auth;
-  // console.log('+++++++++++++++++ User', sessionUser)
-
   // Your existing authentication
   const user = await getLoggedUser();
   console.log('+++++++++++++++++ User', user)
@@ -28,7 +24,6 @@ export default auth(async function proxy(request) {
   const userId = request.cookies.get("userId");
 
   if (!userId && user === 'null') {
-    console.log('useid')
     return NextResponse.redirect(
       new URL("/login", request.nextUrl.origin)
     );

@@ -178,8 +178,7 @@ export default function CreateCollection() {
     if (loading || !selectedicon || name.trim().length < 4 || !selectedTools.size) return;
 
     setLoading(true);
-
-    console.log(selectedicon)
+    console.log('selected icon: ', selectedicon)
 
     try {
       const response = await createCollectionAction(
@@ -192,15 +191,31 @@ export default function CreateCollection() {
         [...selectedTools]
       );
 
-      if (response.status === 401) {
-        return router.push('/login')
+      console.log("Create collection response:", response);
+
+      if (response?.status === 401) {
+        router.push('/login')
+        return
       }
 
-      if (response.success) {
-        return router.push('/dashboard/collections')
+      if (response?.success) {
+        router.push('/dashboard/collections')
+        return
       }
 
-    } finally {
+      setError(
+        response?.error ||
+        "Collection may not have been created. Check the server response."
+      );
+
+
+    } catch (err) {
+      console.error("Create collection failed:", err);
+      setError(
+        err?.message || "Something went wrong. Please try again."
+      );
+    }
+    finally {
       setLoading(false)
     }
   }
